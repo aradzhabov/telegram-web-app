@@ -35,8 +35,8 @@
                     + " season is selected";
 
                 const data = JSON.stringify({game: getSelectedValue.value});
-                Telegram.WebApp.sendData(data);
-                Telegram.WebApp.close();
+                window.Telegram.WebApp.sendData(data);
+                window.Telegram.WebApp.close();
             }
             else {
                 document.getElementById("error").innerHTML
