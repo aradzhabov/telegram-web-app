@@ -20,6 +20,29 @@
       <dd>..</dd>
 
    <p><button type="submit">ОК</button>
+   <input id="clickMe" type="button" value="clickme" onclick="checkButton();" />
   </form>
+  <h3 id="disp" style= "color:green"> </h3>
+<h4 id="error" style= "color:red"> </h4>
  </body>
+ <script>
+    function checkButton() {
+            var getSelectedValue = document.querySelector(
+                'input[name="game"]:checked');
+
+            if(getSelectedValue != null) {
+                document.getElementById("disp").innerHTML
+                    = getSelectedValue.value
+                    + " season is selected";
+
+                const data = JSON.stringify({game: getSelectedValue.value});
+                Telegram.WebApp.sendData(data);
+                Telegram.WebApp.close();
+            }
+            else {
+                document.getElementById("error").innerHTML
+                    = "*You have not selected any season";
+            }
+        }
+    </script>
 </html>
