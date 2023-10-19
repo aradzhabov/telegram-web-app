@@ -25,6 +25,12 @@
 <h4 id="error" style= "color:red"> </h4>
  </body>
  <script>
+    Telegram.WebApp.ready();
+<!--    Telegram.WebApp.MainButton.setText('Choose Color').show().onClick(function () {-->
+<!--        const data = JSON.stringify({hex: colorPicker.color.hexString, rgb: colorPicker.color.rgb});-->
+<!--        Telegram.WebApp.sendData(data);-->
+<!--        Telegram.WebApp.close();-->
+<!--    });-->
     function checkButton() {
             var getSelectedValue = document.querySelector(
                 'input[name="game"]:checked');
@@ -35,8 +41,8 @@
                     + " season is selected";
 
                 const data = JSON.stringify({game: getSelectedValue.value});
-                window.Telegram.WebApp.sendData(data);
-                window.Telegram.WebApp.close();
+                Telegram.WebApp.sendData(data);
+                Telegram.WebApp.close();
             }
             else {
                 document.getElementById("error").innerHTML
