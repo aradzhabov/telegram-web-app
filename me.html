@@ -89,7 +89,7 @@
                     = getSelectedValue.value
                     + " season is selected";
 
-                const data = JSON.stringify({game: getSelectedValue.value});
+                const data = JSON.stringify({moex: getSelectedValue.value});
                 Telegram.WebApp.sendData(data);
                 Telegram.WebApp.close();
             }
