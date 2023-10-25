@@ -7,6 +7,7 @@
    <!--body { background:  #053f38; color: #98baba; }-->
    body {background-image: url('graph_in_Space.jpg');}
    p.question { color: #ffd595; }
+   .text_container { display: none; }
   </style>
       <style>
 
@@ -24,7 +25,14 @@
      </tr>
      <tr>
          <td></td>
-         <td colspan="3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Поиск схожих по поведению акций за период</td>
+         <td colspan="3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+             <div id="text_container1">
+                Поиск схожих по поведению акций за период (... ℹ️)
+                 <span class="text_container" id="text_container">
+                    <p align="right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;больше ... больше деталей)))</p>
+                </span>
+             </div>
+         </td>
          <td></td>
          <td></td>
      </tr>
@@ -96,6 +104,17 @@
             else {
                 document.getElementById("error").innerHTML
                     = "¯\_(ツ)_/¯ Вы ничего не выблали";
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        document.getElementById("text_container1").onclick = function() {
+            var x = document.getElementById("text_container")
+            if (x.style.display === "none" || x.style.display === "") {
+                x.style.display = "block";
+            }
+            else {
+                x.style.display = "none"
             }
         }
     </script>
