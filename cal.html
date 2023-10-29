@@ -1,32 +1,16 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
   <link href="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.css" rel="stylesheet" type="text/css" />
   <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
   <script src="semantic.min_.js"></script>
-<!--https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/-->
-<!--<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />-->
-<!--<link href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.css" rel="stylesheet" type="text/css" />-->
-<!--&lt;!&ndash;<link href="https://cdn.rawgit.com/mdehoog/Semantic-UI-Calendar/76959c6f7d33a527b49be76789e984a0a407350b/dist/calendar.min.css" rel="stylesheet" type="text/css" />&ndash;&gt;-->
-<!--<script src="https://code.jquery.com/jquery-2.1.4.js"></script>-->
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.js"></script>-->
-<!--<script src="https://cdn.rawgit.com/mdehoog/Semantic-UI-Calendar/76959c6f7d33a527b49be76789e984a0a407350b/dist/calendar.min.js"></script>-->
-
   <meta charset="UTF-8">
-  <title>Title</title>
+  <title>Gagarin data labs</title>
 </head>
 <body>
-
-  <a href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">font</a>
-  <a href="https://code.jquery.com/jquery-2.1.4.js">jquery</a>
-  <a href="  https://cdn.rawgit.com/mdehoog/Semantic-UI-Calendar/76959c6f7d33a527b49be76789e984a0a407350b/dist/calendar.min.js
-">cal</a>
-
-<a href="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.css">css</a>
-<a href="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.js">js</a>
   <h3>Range</h3>
 
   <div class="ui form">
@@ -86,8 +70,7 @@ $('#rangestart').calendar({
   firstDayOfWeek: 1,
   minDate: new Date(today.getFullYear(), today.getMonth(), today.getDate() - 14),
   maxDate: new Date(today.getFullYear(), today.getMonth(), today.getDate() + 2),
-  endCalendar: $('#rangeend'),
-  // OnChange: function (date, text) {alert(text)}
+  endCalendar: $('#rangeend')
 });
 $('#rangeend').calendar({
   type: 'date',
@@ -104,20 +87,11 @@ $('#rangeend').calendar({
   //   },
   // });
 
-
   function checkButton() {
-
-    // alert($('#rangestart'))
       alert($('#rangeend').calendar('get startDate'))
-      //         // = getSelectedValue.value
-      //         // + " season is selected";
-
-    // jQuery.fn.init [div#rangestart.ui.calendar, context: document, selector: '#rangestart']
   }
 
-
 </script>
-
 
 </body>
 </html>
