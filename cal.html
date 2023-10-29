@@ -62,22 +62,58 @@
       </div>
   </div>
   <br/>
+<form>
+  <input id="clickMe" type="button" value='◕‿◕ Ok' onclick="checkButton();" />
 
+</form>
 <script>
+
+
+  text_ru = {
+    days: ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
+    months: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
+    monthsShort: ["Янв", "Фев", "Мар", "Апр", "Май", "Июн", "Июл", "Авг", "Сен", "Окт", "Ноя", "Дек"],
+    today: "Сегодня",
+    now: "Сейчас",
+    am: "до полудня",
+    pm: "после полудня"
+  }
 
 var today = new Date();
 $('#rangestart').calendar({
   type: 'date',
+  text: text_ru,
+  firstDayOfWeek: 1,
   minDate: new Date(today.getFullYear(), today.getMonth(), today.getDate() - 14),
   maxDate: new Date(today.getFullYear(), today.getMonth(), today.getDate() + 2),
-  endCalendar: $('#rangeend')
+  endCalendar: $('#rangeend'),
+  // OnChange: function (date, text) {alert(text)}
 });
 $('#rangeend').calendar({
   type: 'date',
+  firstDayOfWeek: 1,
 <!--  minDate: new Date(today.getFullYear(), today.getMonth(), today.getDate() - 14),-->
   maxDate: new Date(today.getFullYear(), today.getMonth(), today.getDate() + 2),
   startCalendar: $('#rangestart')
 });
+
+  // $('.ui.calendar').calendar({
+  //   onChange: function (date, text) {
+  //     var newValue = text;
+  //     alert(newValue);
+  //   },
+  // });
+
+
+  function checkButton() {
+
+    // alert($('#rangestart'))
+      alert($('#rangeend').calendar('get startDate'))
+      //         // = getSelectedValue.value
+      //         // + " season is selected";
+
+    // jQuery.fn.init [div#rangestart.ui.calendar, context: document, selector: '#rangestart']
+  }
 
 
 </script>
