@@ -3,10 +3,17 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-  <link href="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.css" rel="stylesheet" type="text/css" />
-  <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
-  <script src="semantic.min_.js"></script>
+<!--Semantic-UI + commit -->
+<!--    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />-->
+<!--    <link href="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.css" rel="stylesheet" type="text/css" />-->
+<!--    <script src="https://code.jquery.com/jquery-2.1.4.js"></script>-->
+<!--    <script src="semantic.min_.js"></script>-->
+
+<!--fomantic-ui  -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.3/dist/semantic.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.3/dist/semantic.min.js"></script>
+
   <meta charset="UTF-8">
   <title>Gagarin data labs</title>
 </head>
@@ -49,7 +56,162 @@
 <form>
   <input id="clickMe" type="button" value='◕‿◕ Ok' onclick="checkButton();" />
 
-</form>
+
+
+<div class="ui styled fluid accordion">
+  <div class="title active">
+    <i class="dropdown icon"></i>
+    What is a dog?
+  </div>
+  <div class="content active">
+    <p class="visible" style="display: block !important;">A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as a welcome guest in many households across the world.</p>
+  </div>
+  <div class="title">
+    <i class="dropdown icon"></i>
+    What kinds of dogs are there?
+  </div>
+  <div class="content">
+    <p class="transition hidden">
+      <input type="radio" name="moex" value="1.1"/>
+      There are many breeds of dogs. Each breed varies in size and temperament. Owners often select a breed of dog that they find to be compatible with their own lifestyle and desires from a companion.</p>
+  </div>
+  <div class="title">
+    <i class="dropdown icon"></i>
+    How do you acquire a dog?
+  </div>
+  <div class="content">
+    <p class="transition hidden">Three common ways for a prospective owner to acquire a dog is from pet shops, private owners, or shelters.</p>
+    <p class="transition hidden">A pet shop may be the most convenient way to buy a dog. Buying a dog from a private owner allows you to assess the pedigree and upbringing of your dog before choosing to take it home. Lastly, finding your dog from a shelter, helps give a good home to a dog who may not find one so readily.</p>
+  </div>
+</div>
+
+  </form>
+
+<!--<div class="ui accordion">-->
+<!--  <div class="active title">-->
+<!--    <i class="dropdown icon"></i>-->
+<!--    What is a dog?-->
+<!--  </div>-->
+<!--  <div class="active content">-->
+<!--    <p>A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as a welcome guest in many households across the world.</p>-->
+<!--  </div>-->
+<!--  <div class="title">-->
+<!--    <i class="dropdown icon"></i>-->
+<!--    What kinds of dogs are there?-->
+<!--  </div>-->
+<!--  <div class="content">-->
+<!--    <p>There are many breeds of dogs. Each breed varies in size and temperament. Owners often select a breed of dog that they find to be compatible with their own lifestyle and desires from a companion.</p>-->
+<!--  </div>-->
+<!--  <div class="title">-->
+<!--    <i class="dropdown icon"></i>-->
+<!--    How do you acquire a dog?-->
+<!--  </div>-->
+<!--  <div class="content">-->
+<!--    <p>Three common ways for a prospective owner to acquire a dog is from pet shops, private owners, or shelters.</p>-->
+<!--    <p>A pet shop may be the most convenient way to buy a dog. Buying a dog from a private owner allows you to assess the pedigree and upbringing of your dog before choosing to take it home. Lastly, finding your dog from a shelter, helps give a good home to a dog who may not find one so readily.</p>-->
+<!--  </div>-->
+<!--</div>-->
+
+
+<!--<div class="ui info message">-->
+<!--  For nested accordions you only need to initialize the parent accordion.-->
+<!--</div>-->
+<!--<div class="ui styled accordion">-->
+<!--  <div class="title active">-->
+<!--    <i class="dropdown icon"></i>-->
+<!--    Level 1-->
+<!--  </div>-->
+<!--  <div class="content active">-->
+<!--    Welcome to level 1-->
+<!--    <div class="accordion visible" style="display: block !important;">-->
+<!--      <div class="active title">-->
+<!--          <i class="dropdown icon"></i>-->
+<!--          Level 1A-->
+<!--      </div>-->
+<!--      <div class="active content">-->
+<!--        <p>Level 1A Contents</p>-->
+<!--        <div class="accordion">-->
+<!--          <div class="title">-->
+<!--              <i class="dropdown icon"></i>-->
+<!--              Level 1A-A-->
+<!--          </div>-->
+<!--          <div class="content">-->
+<!--              Level 1A-A Contents-->
+<!--          </div>-->
+<!--          <div class="title">-->
+<!--              <i class="dropdown icon"></i>-->
+<!--              Level 1A-B-->
+<!--          </div>-->
+<!--          <div class="content">-->
+<!--              Level 1A-B Contents-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="title">-->
+<!--          <i class="dropdown icon"></i>-->
+<!--          Level 1B-->
+<!--      </div>-->
+<!--      <div class="content">-->
+<!--          Level 1B Contents-->
+<!--      </div>-->
+<!--      <div class="title">-->
+<!--          <i class="dropdown icon"></i>-->
+<!--          Level 1C-->
+<!--      </div>-->
+<!--      <div class="content">-->
+<!--          Level 1C Contents-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="title">-->
+<!--    <i class="dropdown icon"></i>-->
+<!--    Level 2-->
+<!--  </div>-->
+<!--  <div class="content">-->
+<!--    <p>Welcome to level 2</p>-->
+<!--    <div class="accordion">-->
+<!--      <div class="active title">-->
+<!--        <i class="dropdown icon"></i>-->
+<!--        Level 2A-->
+<!--      </div>-->
+<!--      <div class="active content">-->
+<!--        <p>Level 2A Contents</p>-->
+<!--        <div class="accordion">-->
+<!--          <div class="title">-->
+<!--              <i class="dropdown icon"></i>-->
+<!--              Level 2A-A-->
+<!--          </div>-->
+<!--          <div class="content">-->
+<!--              Level 2A-A Contents-->
+<!--          </div>-->
+<!--          <div class="title">-->
+<!--              <i class="dropdown icon"></i>-->
+<!--              Level 2A-B-->
+<!--          </div>-->
+<!--          <div class="content">-->
+<!--              Level 2A-B Contents-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="title">-->
+<!--          <i class="dropdown icon"></i>-->
+<!--          Level 2B-->
+<!--      </div>-->
+<!--      <div class="content">-->
+<!--          Level 2B Contents-->
+<!--      </div>-->
+<!--      <div class="title">-->
+<!--          <i class="dropdown icon"></i>-->
+<!--          Level 2C-->
+<!--      </div>-->
+<!--      <div class="content">-->
+<!--          Level 2C Contents-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+
 <script>
 
 
@@ -63,10 +225,15 @@
     pm: "после полудня"
   }
 
+disabled_week_day = [0,6]
+
 var today = new Date();
 $('#rangestart').calendar({
   type: 'date',
   text: text_ru,
+<!--  inline: true,-->
+<!--startMode: month,-->
+disabledDaysOfWeek : disabled_week_day,
   firstDayOfWeek: 1,
   minDate: new Date(today.getFullYear(), today.getMonth(), today.getDate() - 14),
   maxDate: new Date(today.getFullYear(), today.getMonth(), today.getDate() + 2),
@@ -89,7 +256,17 @@ $('#rangeend').calendar({
 
   function checkButton() {
       alert($('#rangeend').calendar('get startDate'))
+<!--      $('.ui.accordion').accordion('open', 1)-->
+       $('.ui.accordion').accordion('toggle', 2)
+       alert(document.querySelector(
+                'input[name="moex"]:checked').value)
   }
+
+$('.ui.accordion')
+  .accordion()
+;
+
+
 
 </script>
 
