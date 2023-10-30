@@ -18,43 +18,7 @@
   <title>Gagarin data labs</title>
 </head>
 <body>
-  <h3>Range</h3>
 
-  <div class="ui form">
-    <div class="two fields">
-      <table width="185px">
-        <tr>
-          <td>
-            <div class="field">
-              <label>Start date</label>
-              <div class="ui calendar" id="rangestart">
-                <div class="ui input left icon">
-                  <i class="calendar icon"></i>
-                  <input type="text" placeholder="Start">
-                </div>
-              </div>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-          <div class="field">
-            <label>End date</label>
-            <div class="ui calendar" id="rangeend">
-              <div class="ui input left icon">
-                <i class="calendar icon"></i>
-                <input type="text" placeholder="End"> <!--value="10/29/2023 3pm">-->
-              </div>
-            </div>
-          </div>
-          </td>
-        </tr>
-      </table>
-      </div>
-  </div>
-  <br/>
-<form>
-  <input id="clickMe" type="button" value='◕‿◕ Ok' onclick="checkButton();" />
 
 <!--
 <div class="ui info message">
@@ -91,8 +55,8 @@
 </div>
 -->
 
-</form>
 
+<form>
 
 <div class="ui styled accordion">
   <div class="title active">
@@ -108,12 +72,12 @@
       </div>
       <div class="active content">
         <p>Период</p>
-        <div class="accordion">
+        <div class="accordion visible" style="display: block !important;">
           <div class="title">
               <i class="dropdown icon"></i>
               интервал / цена за разовый запрос
           </div>
-          <div class="content">
+          <div class="active content">
              <table>
                 <tr>
                      <td></td>
@@ -153,6 +117,41 @@
                  </tr>
 
              </table>
+
+              <div class="ui form">
+    <div class="two fields">
+      <table width="185px">
+        <tr>
+          <td>
+            <div class="field">
+              <label>Start date</label>
+              <div class="ui calendar" id="rangestart">
+                <div class="ui input left icon">
+                  <i class="calendar icon"></i>
+                  <input type="text" placeholder="Start">
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+          <div class="field">
+            <label>End date</label>
+            <div class="ui calendar" id="rangeend">
+              <div class="ui input left icon">
+                <i class="calendar icon"></i>
+                <input type="text" placeholder="End"> <!--value="10/29/2023 3pm">-->
+              </div>
+            </div>
+          </div>
+          </td>
+        </tr>
+      </table>
+      </div>
+  </div>
+  <br/>
+
           </div>
 <!--
           <div class="title">
@@ -231,6 +230,13 @@
   </div>
 </div>
 
+
+<h3>Range</h3>
+
+
+
+  <input id="clickMe" type="button" value='◕‿◕ Ok' onclick="checkButton();" />
+</form>
 
 <script>
 
