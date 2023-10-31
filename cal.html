@@ -3,6 +3,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+           <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <!--Semantic-UI + commit -->
 <!--    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />-->
 <!--    <link href="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.css" rel="stylesheet" type="text/css" />-->
@@ -147,6 +148,8 @@
                 <br/>
                 <!--<p style="margin-left: 100px;">-->
                     <input id="clickMe" type="button" value='Ok ✔' onclick="checkButton();" />
+                    <h3 id="disp" style= "color:green"> </h3>
+                    <h4 id="error" style= "color:red"> </h4>
                 <!--</p>-->
             </form>
 
@@ -229,7 +232,9 @@
   </div>
   -->
 </div>
+</div>
 
+</body>
 <script>
 
 
@@ -272,21 +277,56 @@ $('#rangeend').calendar({
   //   },
   // });
 
-  function checkButton() {
-      alert($('#rangeend').calendar('get startDate'))
-<!--      $('.ui.accordion').accordion('open', 1)-->
-       $('.ui.accordion').accordion('toggle', 2)
-       alert(document.querySelector(
-                'input[name="moex"]:checked').value)
-  }
-
 $('.ui.accordion')
   .accordion()
 ;
 
 
 
+Telegram.WebApp.ready();
+function checkButton() {
+
+<!--      alert($('#rangeend').calendar('get startDate'))-->
+<!--      $('.ui.accordion').accordion('open', 1)-->
+<!--      $('.ui.accordion').accordion('toggle', 2)-->
+<!--       alert(document.querySelector('input[name="moex"]:checked').value)-->
+
+    selected_pk_item = document.querySelector('input[name="moex"]:checked');
+    selected_start_date = $('#rangestart').calendar('get date');
+    selected_end_date = $('#rangeend').calendar('get date');
+
+    bln_input_valid = true;
+    err_msg = ''
+    if (selected_pk_item == null) {
+        err_msg += "Вы не выбрали услугу.";
+        bln_input_valid = false;
+    }
+    if (selected_start_date == null) {
+        err_msg += "дату начала";
+        bln_input_valid = false;
+    }
+    if (selected_end_date == null) {
+        err_msg +=  "дату окончания";
+        bln_input_valid = false;
+    }
+    //alert(bln_input_valid)
+    if(bln_input_valid) {
+            document.getElementById("disp").innerHTML
+                = 'ок'
+
+
+        const data = JSON.stringify({moex: selected_pk_item.value});
+        Telegram.WebApp.sendData(data);
+        Telegram.WebApp.close();
+
+    }
+    else {
+        document.getElementById("error").innerHTML
+            = "¯\_(ツ)_/¯ "+err_msg;
+    }
+}
+
 </script>
 
-</body>
+
 </html>
