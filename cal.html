@@ -237,6 +237,9 @@
 </body>
 <script>
 
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+const start_date = urlParams.get('start_date')
 
   text_ru = {
     days: ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
@@ -254,19 +257,41 @@ var today = new Date();
 $('#rangestart').calendar({
   type: 'date',
   text: text_ru,
-<!--  inline: true,-->
-<!--startMode: month,-->
+//  inline: true,
+//  startMode: month,
 disabledDaysOfWeek : disabled_week_day,
   firstDayOfWeek: 1,
-  minDate: new Date(today.getFullYear(), today.getMonth(), today.getDate() - 14),
-  maxDate: new Date(today.getFullYear(), today.getMonth(), today.getDate() + 2),
-  endCalendar: $('#rangeend')
+  minDate: new Date(today.getFullYear(), today.getMonth(), today.getDate() - 35),
+  maxDate: new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1),
+  endCalendar: $('#rangeend'),
+  onChange: function (date, text) {
+       var newValue = text;
+       alert(start_date);
+       newMaxDate = date + 14;
+       limitMaxDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1)
+       if (newMaxDate > limitMaxDate) {
+            newMaxDate = limitMaxDate
+       }
+
+       $('#rangeend').calendar('maxDate', newMaxDate);
+  }
 });
+
+/*
+$('#rangestart').calendar({
+     onChange: function (date, text) {
+       var newValue = text;
+       alert(newValue);
+     },
+ });
+*/
+
+
 $('#rangeend').calendar({
   type: 'date',
   firstDayOfWeek: 1,
 <!--  minDate: new Date(today.getFullYear(), today.getMonth(), today.getDate() - 14),-->
-  maxDate: new Date(today.getFullYear(), today.getMonth(), today.getDate() + 2),
+  maxDate: new Date(today.getFullYear(), today.getMonth(), today.getDate() -1),
   startCalendar: $('#rangestart')
 });
 
@@ -286,10 +311,10 @@ $('.ui.accordion')
 Telegram.WebApp.ready();
 function checkButton() {
 
-<!--      alert($('#rangeend').calendar('get startDate'))-->
-<!--      $('.ui.accordion').accordion('open', 1)-->
-<!--      $('.ui.accordion').accordion('toggle', 2)-->
-<!--       alert(document.querySelector('input[name="moex"]:checked').value)-->
+//      alert($('#rangeend').calendar('get startDate'))
+//      $('.ui.accordion').accordion('open', 1)
+//      $('.ui.accordion').accordion('toggle', 2)
+//       alert(document.querySelector('input[name="moex"]:checked').value)
 
     selected_pk_item = document.querySelector('input[name="moex"]:checked');
     selected_start_date = $('#rangestart').calendar('get date');
@@ -315,7 +340,7 @@ function checkButton() {
                 = 'ок'
 
 
-        const data = JSON.stringify({moex: selected_pk_item.value});
+        const data = JSON.stringify({moex: selected_pk_item.value, sd: selected_start_date, ed: selected_end_date});
         Telegram.WebApp.sendData(data);
         Telegram.WebApp.close();
 
