@@ -239,8 +239,8 @@
 
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
-const max_start_date = datetime.strptime(urlParams.get('max_start_date'), '%d-%m-%y)
-const max_end_date = datetime.strptime(urlParams.get('max_end_date'), '%d-%m-%y)
+const max_start_date = new Date(urlParams.get('max_start_date'));
+const max_end_date = new Date(urlParams.get('max_end_date'));
 
   text_ru = {
     days: ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
