@@ -239,7 +239,8 @@
 
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
-const start_date = urlParams.get('start_date')
+const max_start_date = datetime.strptime(urlParams.get('max_start_date'), '%d-%m-%y)
+const max_end_date = datetime.strptime(urlParams.get('max_end_date'), '%d-%m-%y)
 
   text_ru = {
     days: ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
@@ -261,8 +262,8 @@ $('#rangestart').calendar({
 //  startMode: month,
 disabledDaysOfWeek : disabled_week_day,
   firstDayOfWeek: 1,
-  minDate: new Date(today.getFullYear(), today.getMonth(), today.getDate() - 35),
-  maxDate: new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1),
+  minDate: max_start_date,
+  maxDate: max_end_date - 5,
   endCalendar: $('#rangeend'),
   onChange: function (date, text) {
        var newValue = text;
@@ -305,8 +306,6 @@ $('#rangeend').calendar({
 $('.ui.accordion')
   .accordion()
 ;
-
-
 
 Telegram.WebApp.ready();
 function checkButton() {
