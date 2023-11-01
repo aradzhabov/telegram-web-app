@@ -306,8 +306,8 @@ function checkButton() {
 //       alert(document.querySelector('input[name="moex"]:checked').value)
 
     selected_pk_item = document.querySelector('input[name="moex"]:checked');
-    selected_start_date = $('#rangestart').calendar('get date');
-    selected_end_date = $('#rangeend').calendar('get date');
+    selected_start_date = $('#rangestart').calendar('get startDate');
+    selected_end_date = $('#rangeend').calendar('get endDate');
 
     bln_input_valid = true;
     err_msg = ''
