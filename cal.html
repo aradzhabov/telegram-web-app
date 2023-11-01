@@ -278,6 +278,7 @@ disabledDaysOfWeek : disabled_week_day,
        }
 
        $('#rangeend').calendar('maxDate', new_end_max_date);
+       $('#rangeend').calendar('minDate', new Date(date.getFullYear(), date.getMonth(), date.getDate() +5));
   }
 });
 
