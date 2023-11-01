@@ -237,10 +237,14 @@
 </body>
 <script>
 
+
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
-const max_start_date = new Date(urlParams.get('max_start_date'));
-const max_end_date = new Date(urlParams.get('max_end_date'));
+dtm_tmp = new Date(urlParams.get('max_start_date'));
+const max_start_date = new Date(dtm_tmp.getFullYear(), dtm_tmp.getMonth(), dtm_tmp.getDate());
+dtm_tmp = new Date(urlParams.get('max_end_date'));
+const max_end_date = new Date(dtm_tmp.getFullYear(), dtm_tmp.getMonth(), dtm_tmp.getDate());
+
 
   text_ru = {
     days: ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
@@ -263,7 +267,7 @@ $('#rangestart').calendar({
 disabledDaysOfWeek : disabled_week_day,
   firstDayOfWeek: 1,
   minDate: max_start_date,
-  maxDate: max_end_date - 5,
+  maxDate: max_end_date,
   endCalendar: $('#rangeend'),
   onChange: function (date, text) {
        var newValue = text;
