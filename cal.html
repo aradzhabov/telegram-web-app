@@ -306,8 +306,8 @@ function checkButton() {
 //       alert(document.querySelector('input[name="moex"]:checked').value)
 
     selected_pk_item = document.querySelector('input[name="moex"]:checked');
-    selected_start_date = $('#rangestart').calendar('get startDate');
-    selected_end_date = $('#rangeend').calendar('get endDate');
+    selected_start_date = $('#rangestart').calendar('get date');
+    selected_end_date = $('#rangeend').calendar('get date');
 
     bln_input_valid = true;
     err_msg = ''
@@ -329,7 +329,7 @@ function checkButton() {
                 = 'ок'
 
 
-        const data = JSON.stringify({moex: selected_pk_item.value, sd: selected_start_date, ed: selected_end_date});
+        const data = JSON.stringify({moex: selected_pk_item.value, sd: selected_start_date.toISOString().substring(0, 10), ed: selected_end_date.toISOString().substring(0, 10)});
         Telegram.WebApp.sendData(data);
         Telegram.WebApp.close();
 
