@@ -276,9 +276,9 @@ disabledDaysOfWeek : disabled_week_day,
        if (new_end_max_date > max_end_date) {
             new_end_max_date = max_end_date;
        }
-
-       $('#rangeend').calendar('maxDate', new_end_max_date);
-       $('#rangeend').calendar('minDate', new Date(date.getFullYear(), date.getMonth(), date.getDate() +5));
+       $('#rangeend').calendar('set maxDate', new_end_max_date);
+       $('#rangeend').calendar('set minDate', new Date(date.getFullYear(), date.getMonth(), date.getDate() +5));
+       $('#rangeend').calendar('clear');
   }
 });
 
