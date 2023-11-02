@@ -331,8 +331,8 @@ function checkButton() {
             document.getElementById("disp").innerHTML
                 = 'ок'
         // вынужденно конверчу в строку руками иначе стандартные методы коверкаю дату под UTC
-        str_selected_start_date = selected_start_date.getFullYear()+'-'+selected_start_date.getMonth()+'-'+selected_start_date.getDate()
-        str_selected_end_date = selected_end_date.getFullYear()+'-'+selected_end_date.getMonth()+'-'+selected_end_date.getDate()
+        str_selected_start_date = selected_start_date.getFullYear()+'-'+(selected_start_date.getMonth()+1)+'-'+selected_start_date.getDate()
+        str_selected_end_date = selected_end_date.getFullYear()+'-'+(selected_end_date.getMonth()+1)+'-'+selected_end_date.getDate()
         const data = JSON.stringify({moex: selected_pk_item.value, sd: str_selected_start_date, ed: str_selected_end_date});
         Telegram.WebApp.sendData(data);
         Telegram.WebApp.close();
