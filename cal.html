@@ -265,8 +265,8 @@ $('#rangestart').calendar({
   type: 'date',
   text: text_ru,
 //  inline: true,
-//  startMode: month,
-disabledDaysOfWeek : disabled_week_day,
+  startMode: 'month',
+  disabledDaysOfWeek : disabled_week_day,
   firstDayOfWeek: 1,
   minDate: max_start_date,
   maxDate: max_end_date_for_range_start,
@@ -290,6 +290,7 @@ $('#rangeend').calendar({
   type: 'date',
   text: text_ru,
   firstDayOfWeek: 1,
+  startMode: 'month',
   minDate: max_start_date,
   maxDate: max_end_date,
   startCalendar: $('#rangestart')
@@ -313,17 +314,17 @@ function checkButton() {
     selected_end_date = $('#rangeend').calendar('get date');
 
     bln_input_valid = true;
-    err_msg = ''
+    err_msg = 'Пожалуйста, выберете:'
     if (selected_pk_item == null) {
-        err_msg += "Вы не выбрали услугу.";
+        err_msg += "<li>услугу";
         bln_input_valid = false;
     }
     if (selected_start_date == null) {
-        err_msg += "дату начала";
+        err_msg += "<li>дату начала";
         bln_input_valid = false;
     }
     if (selected_end_date == null) {
-        err_msg +=  "дату окончания";
+        err_msg +=  "<li>дату окончания";
         bln_input_valid = false;
     }
     //alert(bln_input_valid)
