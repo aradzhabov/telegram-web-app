@@ -69,9 +69,16 @@
           Поиск схожих по поведению акций за период
       </div>
       <div class="active content">
-        <p>В выбранном периоде акции будут объединены в группы по критерию схожести поведения.
-            Вы получите данные (.xls) по всем акциям за период с признаком группы, а так же
-            для каждой группы графики цен акций попавших в группу для анализа и учета в своих алгоритмах принятия решения</p>
+        <p>
+            В выбранном периоде акции будут объединены в группы по критерию схожести поведения.
+            Вы получите данные:<br>
+            &nbsp;&nbsp;-(.xls) по всем акциям за период с признаком группы;<br>
+            &nbsp;&nbsp;-(.png) графики цен акций, попавших в группу, для каждой группы по-отдельности.
+            <br>Полученные данные можно проанализировать и учесть в своих алгоритмах принятия решения.
+<!--            В выбранном периоде акции будут объединены в группы по критерию схожести поведения.-->
+<!--            Вы получите данные (.xls) по всем акциям за период с признаком группы, а так же-->
+<!--            для каждой группы графики цен акций попавших в группу для анализа и учета в своих алгоритмах принятия решения-->
+        </p>
         <div class="accordion visible" style="display: block !important;">
           <div class="title">
               <i class="dropdown icon"></i>
@@ -246,7 +253,7 @@ dtm_tmp = new Date(urlParams.get('max_start_date'));
 const max_start_date = new Date(dtm_tmp.getFullYear(), dtm_tmp.getMonth(), dtm_tmp.getDate());
 dtm_tmp = new Date(urlParams.get('max_end_date'));
 const max_end_date = new Date(dtm_tmp.getFullYear(), dtm_tmp.getMonth(), dtm_tmp.getDate());
-const max_end_date_for_range_start = new Date(dtm_tmp.getFullYear(), dtm_tmp.getMonth(), dtm_tmp.getDate() - 5);
+const max_end_date_for_range_start = new Date(dtm_tmp.getFullYear(), dtm_tmp.getMonth(), dtm_tmp.getDate() - 4);
 
   text_ru = {
     days: ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
