@@ -59,58 +59,61 @@
 <div class="ui styled accordion">
   <div class="title active">
     <i class="dropdown icon"></i>
-    MOEX - аналитика Московской биржи
+      MOEX - Moscow Exchange analytics
   </div>
   <div class="content active">
-    В данной категории представлены услуги по аналитике Московской биржи
+      Our services regarding MOEX - Moscow Exchange (stock shares) analytics
     <div class="accordion visible" style="display: block !important;">
       <div class="active title">
           <i class="dropdown icon"></i>
-          Поиск схожих по поведению акций за период
+          Grouping stock shares based on behavior in the selected period
       </div>
       <div class="active content">
         <p>
-            В выбранном периоде акции будут объединены в группы по критерию схожести поведения.
-            Вы получите данные:<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;(.xls) по всем акциям за период с признаком группы;<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;(.png) сравнительные графики цен акций, попавших в группу, для каждой группы по-отдельности.
-            <br>Полученные данные позволят Вам учесть еще один фактор в Ваших алгоритмах принятия решения.
+            In the selected period stock shares will be grouped based on similarity of behavior
+            <br>You will get the following data for each stock share in the selected period:<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;(.xls) assigned group attribute + end of day prices;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;(.png) comparison price charts for each group.
+            <br>The data will allow you to add one more dimension in your decisions.
+<!--            В выбранном периоде акции будут объединены в группы по критерию схожести поведения.-->
+<!--            Вы получите данные (.xls) по всем акциям за период с признаком группы, а так же-->
+<!--            для каждой группы графики цен акций попавших в группу для анализа и учета в своих алгоритмах принятия решения-->
         </p>
         <div class="accordion visible" style="display: block !important;">
           <div class="title">
               <i class="dropdown icon"></i>
-              интервал дат / цена за разовый запрос
+              date interval / price per each request
           </div>
           <div class="active content">
             <form>
              <table>
                 <tr>
                      <td></td>
-                     <td colspan="3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="moex" value="1.1" checked="true">  от 5 дн. до 2х недель /  бесплатно</td>
+                     <td colspan="3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="moex" value="1.1" checked="true">  from 5 days - up to 2 weeks /  free</td>
                      <td></td>
                      <td></td>
                  </tr>
                       <tr>
                      <td></td>
-                     <td colspan="3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="moex" value="1.2" disabled>  до 1 месяца /  подлежит уточнению</td>
+                     <td colspan="3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="moex" value="1.2" disabled>  up to 1 month /  tbd</td>
                      <td></td>
                      <td></td>
                  </tr>
                  <tr>
                      <td></td>
-                     <td colspan="3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="moex" value="1.3" disabled>  до 3 месяцев /  подлежит уточнению</td>
+                     <td colspan="3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="moex" value="1.3" disabled>  up to 3 month /  tbd</td>
                      <td></td>
                      <td></td>
                  </tr>
                  <tr>
                      <td></td>
-                     <td colspan="3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="moex" value="1.4" disabled>  до 6 месяцев /  подлежит уточнению</td>
+                     <td colspan="3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="moex" value="1.4" disabled>  up to 6 month /  tbd</td>
                      <td></td>
                      <td></td>
                  </tr>
                  <tr>
                      <td></td>
-                     <td colspan="3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="moex" value="1.5" disabled>  до 1 года /  подлежит уточнению</td>
+                     <td colspan="3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="moex" value="1.5" disabled>  up to 1 month /  tbd</td>
                      <td></td>
                      <td></td>
                  </tr>
@@ -129,7 +132,7 @@
                           <div class="ui calendar" id="rangestart">
                             <div class="ui input left icon">
                               <i class="calendar icon"></i>
-                              <input type="text" placeholder="начало периода">
+                              <input type="text" placeholder="period start">
                             </div>
                           </div>
                         </div>
@@ -142,7 +145,7 @@
                         <div class="ui calendar" id="rangeend">
                           <div class="ui input left icon">
                             <i class="calendar icon"></i>
-                            <input type="text" placeholder="окончание периода"> <!--value="10/29/2023 3pm">-->
+                            <input type="text" placeholder="period end"> <!--value="10/29/2023 3pm">-->
                           </div>
                         </div>
                       </div>
@@ -191,10 +194,10 @@
   </div>
   <div class="title">
     <i class="dropdown icon"></i>
-    Другие продукты (0)
+    Other products and services  (0)
   </div>
   <div class="content">
-    <p>по мере появления мы будем добавлять новые продукты</p>
+    <p>we will add here new products and services by readiness</p>
     <!--
     <div class="accordion">
       <div class="active title">
@@ -267,7 +270,7 @@ disabled_week_day = [0,6]
 var today = new Date();
 $('#rangestart').calendar({
   type: 'date',
-  text: text_ru,
+  // text: text_ru,
 //  inline: true,
   startMode: 'month',
   disabledDaysOfWeek : disabled_week_day,
@@ -292,7 +295,7 @@ $('#rangestart').calendar({
 
 $('#rangeend').calendar({
   type: 'date',
-  text: text_ru,
+  // text: text_ru,
   firstDayOfWeek: 1,
   startMode: 'month',
   minDate: max_start_date,
@@ -318,17 +321,17 @@ function checkButton() {
     selected_end_date = $('#rangeend').calendar('get date');
 
     bln_input_valid = true;
-    err_msg = 'Пожалуйста, выберете:'
+    err_msg = 'Please, select:'
     if (selected_pk_item == null) {
-        err_msg += "<li>услугу";
+        err_msg += "<li>service";
         bln_input_valid = false;
     }
     if (selected_start_date == null) {
-        err_msg += "<li>дату начала";
+        err_msg += "<li>start date";
         bln_input_valid = false;
     }
     if (selected_end_date == null) {
-        err_msg +=  "<li>дату окончания";
+        err_msg +=  "<li>end date";
         bln_input_valid = false;
     }
     //alert(bln_input_valid)
