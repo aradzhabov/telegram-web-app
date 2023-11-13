@@ -296,7 +296,6 @@ dtm_tmp = new Date(urlParams.get('max_end_date'));
 const max_end_date = new Date(dtm_tmp.getFullYear(), dtm_tmp.getMonth(), dtm_tmp.getDate());
 const max_end_date_for_range_start = new Date(dtm_tmp.getFullYear(), dtm_tmp.getMonth(), dtm_tmp.getDate() - 4);
 
-isAbout = false
 
   text_ru = {
     days: ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
@@ -385,7 +384,7 @@ function checkButton() {
         str_selected_start_date = selected_start_date.getFullYear()+'-'+(selected_start_date.getMonth()+1)+'-'+selected_start_date.getDate()
         str_selected_end_date = selected_end_date.getFullYear()+'-'+(selected_end_date.getMonth()+1)+'-'+selected_end_date.getDate()
 
-        const data = JSON.stringify({moex: selected_pk_item.value, sd: str_selected_start_date, ed: str_selected_end_date, isAbout: isAbout});
+        const data = JSON.stringify({moex: selected_pk_item.value, sd: str_selected_start_date, ed: str_selected_end_date, isAbout: false});
         Telegram.WebApp.sendData(data);
         Telegram.WebApp.close();
 
@@ -400,7 +399,7 @@ function checkButton() {
 
 function about_action(action) {
     // document.getElementById(action).click()
-    const data = JSON.stringify({isAbout: isAbout});
+    const data = JSON.stringify({isAbout: true});
     Telegram.WebApp.sendData(data);
     Telegram.WebApp.close();
 }
