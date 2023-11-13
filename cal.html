@@ -246,7 +246,7 @@
         <p class="transition hidden">
         <p>
             🚀 Подписывайтесь на наши новости и анонсы:
-            <a id='a1' href="https://t.me/gagarin_data_labs">https://t.me/gagarin_data_labs</a>
+            <a id='a1' onclick="about_action('a1')" href="https://t.me/gagarin_data_labs">https://t.me/gagarin_data_labs</a>
         <!-- ToDo-1 убрать след. строчку-->
         <a href="https://telegram.me/share/url?url=https://t.me/gagarin_data_labs&text=123">123</a>
         <p>
@@ -381,13 +381,11 @@ function checkButton() {
     }
 }
 
-
-$("a #a1").click(function(event) {
+function about_action(action) {
     alert("ok")
     Telegram.WebApp.close();
-//     event.preventDefault();
-//     navigator.clipboard.writeText($(this).attr("href"));
-});
+}
+
 
 
 
