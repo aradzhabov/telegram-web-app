@@ -292,6 +292,8 @@ dtm_tmp = new Date(urlParams.get('max_end_date'));
 const max_end_date = new Date(dtm_tmp.getFullYear(), dtm_tmp.getMonth(), dtm_tmp.getDate());
 const max_end_date_for_range_start = new Date(dtm_tmp.getFullYear(), dtm_tmp.getMonth(), dtm_tmp.getDate() - 4);
 
+isAbout = False
+
   text_ru = {
     days: ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
     months: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
@@ -378,7 +380,8 @@ function checkButton() {
         // вынужденно конверчу в строку руками иначе стандартные методы коверкаю дату под UTC
         str_selected_start_date = selected_start_date.getFullYear()+'-'+(selected_start_date.getMonth()+1)+'-'+selected_start_date.getDate()
         str_selected_end_date = selected_end_date.getFullYear()+'-'+(selected_end_date.getMonth()+1)+'-'+selected_end_date.getDate()
-        const data = JSON.stringify({moex: selected_pk_item.value, sd: str_selected_start_date, ed: str_selected_end_date});
+
+        const data = JSON.stringify({moex: selected_pk_item.value, sd: str_selected_start_date, ed: str_selected_end_date, isAbout: isAbout});
         Telegram.WebApp.sendData(data);
         Telegram.WebApp.close();
 
@@ -392,9 +395,8 @@ function checkButton() {
 
 
 function about_action(action) {
-    // alert(action)
-    // setTimeout(just_dummy_wait, 5000)
-    document.getElementById(action).click()
+    // document.getElementById(action).click()
+    isAbout = True
     Telegram.WebApp.close();
 }
 
