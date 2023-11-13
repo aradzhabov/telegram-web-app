@@ -249,6 +249,10 @@
     </div>
     <div class="content">
         <p class="transition hidden">
+            <button onclick=about_action('123')><img style="vertical-align:middle" src="about.png" width="27"
+                                                     alt="о нас"></button>
+            <button style="background: url('about.png')" onclick="about_action('123')"><img style="vertical-align:middle" src="about.png" width="27"
+                                                                                            alt="о нас"></button>
             🚀 Подписывайтесь на наши новости и анонсы:<br>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a id='a1' onclick="about_action('a1')" href="https://t.me/gagarin_data_labs">https://t.me/gagarin_data_labs</a>
 <!--        <button id="a11" onclick="about_action('a1')" style="padding: 10px">Открыть</button>-->
@@ -396,7 +400,8 @@ function checkButton() {
 
 function about_action(action) {
     // document.getElementById(action).click()
-    isAbout = true
+    const data = JSON.stringify({isAbout: isAbout});
+    Telegram.WebApp.sendData(data);
     Telegram.WebApp.close();
 }
 
