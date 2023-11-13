@@ -380,13 +380,12 @@ function checkButton() {
     }
 }
 
-function just_dummy_wait() {
-    return 1
-}
+
 
 function about_action(action) {
     // alert(action)
-    setTimeout(just_dummy_wait, 5000)
+    // setTimeout(just_dummy_wait, 5000)
+    document.getElementById(action).click()
     Telegram.WebApp.close();
 }
 
