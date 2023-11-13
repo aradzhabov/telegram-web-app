@@ -249,29 +249,30 @@
     </div>
     <div class="content">
         <p class="transition hidden">
-            <button onclick=about_action('123')><img style="vertical-align:middle" src="about.png" width="27"
-                                                     alt="о нас"></button>
-            <button style="background: url('about.png')" onclick="about_action('123')"><img style="vertical-align:middle" src="about.png" width="27"
-                                                                                            alt="о нас"></button>
-            🚀 Подписывайтесь на наши новости и анонсы:<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a id='a1' onclick="about_action('a1')" href="https://t.me/gagarin_data_labs">https://t.me/gagarin_data_labs</a>
-<!--        <button id="a11" onclick="about_action('a1')" style="padding: 10px">Открыть</button>-->
-            </p>
+            <button onclick=about_action('123')><img style="vertical-align:middle" src="about.png" width="57"
+                                                     alt="о нас">Нажмите, чтобы посмотреть ссылки на наши новостные каналы,
+                ботов помощников для обратной связи, вопросов, идей и другую информацию..</button>
+
+<!--            🚀 Подписывайтесь на наши новости и анонсы:<br>-->
+<!--            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a id='a1' onclick="about_action('a1')" href="https://t.me/gagarin_data_labs">https://t.me/gagarin_data_labs</a>-->
+<!--&lt;!&ndash;        <button id="a11" onclick="about_action('a1')" style="padding: 10px">Открыть</button>&ndash;&gt;-->
+<!--            </p>-->
 
 
-        💬 Если у Вас есть вопросы, идеи и пожелания, пишите нам
-        через нашего бота помощника:<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a id="a2" onclick="about_action('a2')" href="https://t.me/Gagarin_data_labs_help_desk_bot">
-        https://t.me/Gagarin_data_labs_help_desk_bot
-        </a>
-        Мы обязательно Вам ответим! ❤️
+<!--        💬 Если у Вас есть вопросы, идеи и пожелания, пишите нам-->
+<!--        через нашего бота помощника:<br>-->
+<!--        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a id="a2" onclick="about_action('a2')" href="https://t.me/Gagarin_data_labs_help_desk_bot">-->
+<!--        https://t.me/Gagarin_data_labs_help_desk_bot-->
+<!--        </a>-->
+<!--        Мы обязательно Вам ответим! ❤️-->
 
-        <p><p>
-        🔗 Поделиться ссылкой на наш сервис:<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a id='a3' onclick="about_action('a3')" href=https://t.me/share/url?url=https://t.me/Gagarin_data_labs_bot">
-        https://t.me/share/url?url=https://t.me/Gagarin_data_labs_bot
-        </a>
+<!--        <p><p>-->
+<!--        🔗 Поделиться ссылкой на наш сервис:<br>-->
+<!--        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a id='a3' onclick="about_action('a3')" href=https://t.me/share/url?url=https://t.me/Gagarin_data_labs_bot">-->
+<!--        https://t.me/share/url?url=https://t.me/Gagarin_data_labs_bot-->
+<!--        </a>-->
     </div>
+
     <!--
     <div class="title">
         <i class="dropdown icon"></i>
@@ -395,17 +396,12 @@ function checkButton() {
     }
 }
 
-
-
 function about_action(action) {
     // document.getElementById(action).click()
     const data = JSON.stringify({isAbout: true});
     Telegram.WebApp.sendData(data);
     Telegram.WebApp.close();
 }
-
-
-
 
 
 </script>
