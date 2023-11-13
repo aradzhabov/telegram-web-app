@@ -292,7 +292,7 @@ dtm_tmp = new Date(urlParams.get('max_end_date'));
 const max_end_date = new Date(dtm_tmp.getFullYear(), dtm_tmp.getMonth(), dtm_tmp.getDate());
 const max_end_date_for_range_start = new Date(dtm_tmp.getFullYear(), dtm_tmp.getMonth(), dtm_tmp.getDate() - 4);
 
-isAbout = False
+isAbout = false
 
   text_ru = {
     days: ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
@@ -396,7 +396,7 @@ function checkButton() {
 
 function about_action(action) {
     // document.getElementById(action).click()
-    isAbout = True
+    isAbout = true
     Telegram.WebApp.close();
 }
 
