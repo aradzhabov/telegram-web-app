@@ -246,7 +246,14 @@
         <p class="transition hidden">
         <p>
             🚀 Подписывайтесь на наши новости и анонсы:
-            <a href="https://t.me/gagarin_data_labs">https://t.me/gagarin_data_labs</a>
+            <a id='a1' href="https://t.me/gagarin_data_labs">https://t.me/gagarin_data_labs</a>
+
+        <span class="background">
+                <button class="clipboard" onclick="copy_url(a1)">copy url</button>
+                <p>?</p>
+        </span>
+
+        <!-- ToDo-1 убрать след. строчку-->
         <a href="https://telegram.me/share/url?url=https://t.me/gagarin_data_labs&text=123">123</a>
         <p>
             💬 Если у Вас есть вопросы, идеи и пожелания, пишите нам
@@ -378,6 +385,45 @@ function checkButton() {
             = "¯\_(ツ)_/¯ "+err_msg;
     }
 }
+
+
+// var $temp = $("<input>");
+// var $url = $(location).attr('href');
+//
+// $('.clipboard').on('click', function() {
+//     $("body").append($temp);
+//     $temp.val($url).select();
+//     document.execCommand("copy");
+//     $temp.remove();
+//     $("p").text("URL copied!");
+// })
+
+// $(document).ready(function () {
+//     $(document).on("click", "#ShareButton", function (e) {
+//         $("body").append('<input id="copyURL" type="text" value="" />');
+//         $("#copyURL").val(window.location.href).select();
+//         document.execCommand("copy");
+//         $("#copyURL").remove();
+//     });
+// });
+//
+function copy_url(id)
+{
+    document.querySelector(id).select();
+    document.execCommand('copy');
+    // var url = document.getElementById(id);
+    // url.value = window.location.href;
+    // url.focus();
+    // url.select();
+    // document.execCommand("Copy");
+}
+
+$("a #a1").click(function(event) {
+    event.preventDefault();
+    navigator.clipboard.writeText($(this).attr("href"));
+});
+
+
 
 </script>
 
