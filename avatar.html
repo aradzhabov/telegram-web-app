@@ -139,7 +139,7 @@
 <script>
     function selectAvatar() {
         selected_avatar = document.querySelector('input[name="avatar"]:checked');
-        const data = JSON.stringify({avatar: selected_avatar});
+        const data = JSON.stringify({avatar: selected_avatar.value});
         Telegram.WebApp.sendData(data);
         Telegram.WebApp.close();
     }
