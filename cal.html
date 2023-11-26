@@ -329,7 +329,7 @@ $('#rangestart').calendar({
   onChange: function (date, text) {
        var newValue = text;
        //alert(start_date);
-       new_end_max_date = new Date(date.getFullYear(), date.getMonth(), date.getDate() +14)
+       new_end_max_date = new Date(date.getFullYear(), date.getMonth(), date.getDate() +365)
        if (new_end_max_date > max_end_date) {
             new_end_max_date = max_end_date;
        }
