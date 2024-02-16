@@ -1077,17 +1077,8 @@
         startCalendar: null,
         endCalendar: null,
         popupOptions: {position: "bottom left", lastResort: "bottom left", prefer: "opposite", hideOnScroll: !1},
-        // text: {
-        //     days: ["S", "M", "T", "W", "T", "F", "S"],
-        //     months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-        //     monthsShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-        //     today: "Today",
-        //     now: "Now",
-        //     am: "AM",
-        //     pm: "PM"
-        // },
         text: {
-            days: ["Вск", "Пн", "Вт", "Ср", "Чт", "Пт", "Суб"],
+            days: ["S", "M", "T", "W", "T", "F", "S"],
             months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
             monthsShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
             today: "Today",
