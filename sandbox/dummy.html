@@ -16,9 +16,12 @@
 
 <script>
     function submit_data() {
+        textFieldValue = document.getElementById('textField').value;
+        const data = JSON.stringify({data: textFieldValue});
         Telegram.WebApp.sendData(textFieldValue);
         Telegram.WebApp.close();
     }
+
 </script>
 </body>
 </html>
