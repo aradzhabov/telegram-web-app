@@ -16,8 +16,8 @@
 
 <script>
     function submit_data() {
-        textFieldValue = document.getElementById('textField').value;
-        const data = JSON.stringify({data: textFieldValue});
+        tfv = document.getElementById('textField').value;
+        const data = JSON.stringify({data: tfv});
         Telegram.WebApp.sendData(textFieldValue);
         Telegram.WebApp.close();
     }
