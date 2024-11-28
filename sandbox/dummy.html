@@ -15,10 +15,10 @@
     </form>
 
 <script>
+    window.Telegram.WebApp.enableClosingConfirmation()
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-<!--    alert(urlParams)-->
-    const tmp = urlParams.get('show_save_button'));
+    const tmp = urlParams.get('show_save_button');
     document.getElementById('textField').value = tmp
 
 
