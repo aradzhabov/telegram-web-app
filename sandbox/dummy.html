@@ -18,8 +18,9 @@
     window.Telegram.WebApp.enableClosingConfirmation()
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    const tmp = urlParams.get('show_save_button');
-    document.getElementById('textField').value = tmp
+    const incom_data = urlParams.get('data');
+     const tmp = urlParams.get('show_save');
+    document.getElementById('textField').value = incom_data + '_' + tmp
 
 
     function submit_data() {
