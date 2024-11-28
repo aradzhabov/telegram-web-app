@@ -17,9 +17,10 @@
 <script>
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    alert(urlParams)
-    document.getElementById('textField').value = 1
-    <!--    urlParams.get('show_save_button'));-->
+<!--    alert(urlParams)-->
+    const tmp = urlParams.get('show_save_button'));
+    document.getElementById('textField').value = tmp
+
 
     function submit_data() {
         tfv = document.getElementById('textField').value;
