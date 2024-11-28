@@ -9,16 +9,16 @@
 <body>
     <h1>Simple Form</h1>
     <form>
-        <label for="userInput">Enter your text:</label><br>
-        <input type="text" id="textField" name="textField"><br><
-        <input type="button" onclick="submit_data()" value="Submit">
+        Enter your text:<br>
+        <input type="text" id="textField" name="textField"><br>
+        <input type="button" onclick="submit_data()" value="Send">
     </form>
 
 <script>
     function submit_data() {
         tfv = document.getElementById('textField').value;
         const data = JSON.stringify({data: tfv});
-        Telegram.WebApp.sendData(textFieldValue);
+        Telegram.WebApp.sendData(data);
         Telegram.WebApp.close();
     }
 
