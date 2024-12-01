@@ -65,7 +65,7 @@
 
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    const incom_data = urlParams.get();
+    const incom_data = urlParams.get('data');
 let encodedData = incom_data; // replace with the output of the Python script
 let decodedData = JSON.parse(decodeURIComponent(encodedData));
 console.log(decodedData);
