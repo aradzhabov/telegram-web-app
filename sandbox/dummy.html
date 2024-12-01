@@ -16,52 +16,9 @@
     </form>
 
 <script>
-    window.Telegram.WebApp.enableClosingConfirmation()
+<!--v1-->
+window.Telegram.WebApp.enableClosingConfirmation()
 
-        function decodeJsonFromUrl() {
-            // Get the current URL
-            const url = window.location.href;
-
-            // Create a URL object
-            const urlObj = new URL(url);
-
-            // Get the search parameters
-            const params = new URLSearchParams(urlObj.search);
-
-            // Convert search parameters to an object
-            const jsonData = {};
-            params.forEach((value, key) => {
-                const keys = key.split('][');
-                let current = jsonData;
-                for (let i = 0; i < keys.length; i++) {
-                    const k = keys[i].replace(/[\[\]]/g, '');
-                    if (i === keys.length - 1) {
-                        if (Array.isArray(current[k])) {
-                            current[k].push(decodeURIComponent(value));
-                        } else if (current[k] !== undefined) {
-                            current[k] = [current[k], decodeURIComponent(value)];
-                        } else {
-                            current[k] = decodeURIComponent(value);
-                        }
-                    } else {
-                        if (!current[k]) {
-                            current[k] = isNaN(keys[i + 1]) ? {} : [];
-                        }
-                        current = current[k];
-                    }
-                }
-            });
-
-            // Log the decoded JSON data
-            console.log(jsonData);
-
-            // If you need to convert it to a JSON string
-            const jsonString = JSON.stringify(jsonData, null, 2);
-            console.log(jsonString);
-            return jsonString;
-        }
-
-<!--    document.getElementById('textField').value = decodeJsonFromUrl()-->
 
 let url = window.location.href;
 let searchParams = new URLSearchParams(window.location.search);
@@ -81,12 +38,12 @@ document.getElementById('textField').value = decodedDataString;
 
 
 
-    function submit_data() {
-        tfv = document.getElementById('textField').value;
-        const data = JSON.stringify({data: tfv});
-        Telegram.WebApp.sendData(data);
-        Telegram.WebApp.close();
-    }
+function submit_data() {
+    tfv = document.getElementById('textField').value;
+    const data = JSON.stringify({data: tfv});
+    Telegram.WebApp.sendData(data);
+    Telegram.WebApp.close();
+}
 
 </script>
 </body>
