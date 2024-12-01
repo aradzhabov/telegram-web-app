@@ -18,8 +18,6 @@
 <script>
     window.Telegram.WebApp.enableClosingConfirmation()
 
-        // Function to decode JSON from URL parameters
-// Function to decode JSON from URL parameters
         function decodeJsonFromUrl() {
             // Get the current URL
             const url = window.location.href;
@@ -38,7 +36,13 @@
                 for (let i = 0; i < keys.length; i++) {
                     const k = keys[i].replace(/[\[\]]/g, '');
                     if (i === keys.length - 1) {
-                        current[k] = decodeURIComponent(value);
+                        if (Array.isArray(current[k])) {
+                            current[k].push(decodeURIComponent(value));
+                        } else if (current[k] !== undefined) {
+                            current[k] = [current[k], decodeURIComponent(value)];
+                        } else {
+                            current[k] = decodeURIComponent(value);
+                        }
                     } else {
                         if (!current[k]) {
                             current[k] = isNaN(keys[i + 1]) ? {} : [];
@@ -56,6 +60,7 @@
             console.log(jsonString);
             return jsonString;
         }
+
 
 
 
