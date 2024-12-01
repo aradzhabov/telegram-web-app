@@ -16,7 +16,7 @@
     </form>
 
 <script>
-<!--v3-->
+<!--v5-->
 window.Telegram.WebApp.enableClosingConfirmation()
 
 
@@ -40,10 +40,9 @@ document.getElementById('textField').value = decodedDataString;
 
 function submit_data() {
     tfv = document.getElementById('textField').value;
-    let encodedData = encodeURIComponent(JSON.stringify(tfv));
-    console.log(encodedData);
-<!--    const data = JSON.stringify({data: tfv});-->
-    Telegram.WebApp.sendData(encodedData);
+<!--    let encodedData = encodeURIComponent(JSON.stringify(tfv));-->
+<!--    console.log(encodedData);-->
+    Telegram.WebApp.sendData(tfv);
     Telegram.WebApp.close();
 }
 
