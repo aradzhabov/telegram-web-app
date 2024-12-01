@@ -63,13 +63,14 @@
 
 <!--    document.getElementById('textField').value = decodeJsonFromUrl()-->
 
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const incom_data = urlParams.get('data');
-let encodedData = incom_data; // replace with the output of the Python script
+let url = window.location.href;
+let searchParams = new URLSearchParams(window.location.search);
+let encodedData = searchParams.get("data");
 let decodedData = JSON.parse(decodeURIComponent(encodedData));
 console.log(decodedData);
-document.getElementById('textField').value = decodedData;
+let decodedDataString = JSON.stringify(decodedData);
+console.log(decodedDataString);
+document.getElementById('textField').value = decodedDataString;
 
 
 <!--    const queryString = window.location.search;-->
