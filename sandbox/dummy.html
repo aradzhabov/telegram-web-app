@@ -61,7 +61,15 @@
             return jsonString;
         }
 
+<!--    document.getElementById('textField').value = decodeJsonFromUrl()-->
 
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const incom_data = urlParams.get();
+let encodedData = incom_data; // replace with the output of the Python script
+let decodedData = JSON.parse(decodeURIComponent(encodedData));
+console.log(decodedData);
+document.getElementById('textField').value = decodedData;
 
 
 <!--    const queryString = window.location.search;-->
@@ -69,7 +77,8 @@
 <!--    const incom_data = urlParams.get('data');-->
 <!--     const tmp = urlParams.get('show_save');-->
 <!--    document.getElementById('textField').value = incom_data + '_' + tmp-->
-    document.getElementById('textField').value = decodeJsonFromUrl()
+
+
 
     function submit_data() {
         tfv = document.getElementById('textField').value;
