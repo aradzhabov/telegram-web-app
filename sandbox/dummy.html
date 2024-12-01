@@ -51,7 +51,7 @@
 <!--    const incom_data = urlParams.get('data');-->
 <!--     const tmp = urlParams.get('show_save');-->
 <!--    document.getElementById('textField').value = incom_data + '_' + tmp-->
-        document.getElementById('textField').value = jsonString
+        document.getElementById('textField').value = decodeJsonFromUrl()
 
     function submit_data() {
         tfv = document.getElementById('textField').value;
