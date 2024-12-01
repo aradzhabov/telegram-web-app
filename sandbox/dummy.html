@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.13.1/qs.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.13.1/qs.js"></script>
 
     <title>Simple Form</title>
 </head>
@@ -21,53 +19,32 @@
     window.Telegram.WebApp.enableClosingConfirmation()
 
         // Function to decode JSON from URL parameters
-<!--        function decodeJsonFromUrl() {-->
-<!--            // Get the current URL-->
-<!--            const url = window.location.href;-->
+        function decodeJsonFromUrl() {
+            // Get the current URL
+            const url = window.location.href;
 
-<!--            // Create a URL object-->
-<!--            const urlObj = new URL(url);-->
+            // Create a URL object
+            const urlObj = new URL(url);
 
-<!--            // Get the search parameters-->
-<!--            const params = new URLSearchParams(urlObj.search);-->
+            // Get the search parameters
+            const params = new URLSearchParams(urlObj.search);
 
-<!--            // Convert search parameters to an object-->
-<!--            const jsonData = {};-->
-<!--            for (const [key, value] of params.entries()) {-->
-<!--                // Decode the value to handle special characters-->
-<!--                jsonData[key] = decodeURIComponent(value);-->
-<!--            }-->
+            // Convert search parameters to an object
+            const jsonData = {};
+            for (const [key, value] of params.entries()) {
+                // Decode the value to handle special characters
+                jsonData[key] = decodeURIComponent(value);
+            }
 
-<!--            // Log the decoded JSON data-->
-<!--            console.log(jsonData);-->
+            // Log the decoded JSON data
+            console.log(jsonData);
 
-<!--            // If you need to convert it to a JSON string-->
-<!--            const jsonString = JSON.stringify(jsonData, null, 2);-->
-<!--            console.log(jsonString);-->
-<!--            return jsonString-->
-<!--        }-->
+            // If you need to convert it to a JSON string
+            const jsonString = JSON.stringify(jsonData, null, 2);
+            console.log(jsonString);
+            return jsonString
+        }
 
-    function decodeJsonFromUrl() {
-        // Get the current URL
-        const url = window.location.href;
-
-        // Create a URL object
-        const urlObj = new URL(url);
-
-        // Get the search parameters
-        const params = urlObj.search.substring(1); // Remove the leading '?'
-
-        // Parse the query string using qs
-        const jsonData = qs.parse(params, { indices: false });
-
-        // Log the decoded JSON data
-        console.log(jsonData);
-
-        // If you need to convert it to a JSON string
-        const jsonString = JSON.stringify(jsonData, null, 2);
-        console.log(jsonString);
-        return jsonString
-    }
 
 <!--    const queryString = window.location.search;-->
 <!--    const urlParams = new URLSearchParams(queryString);-->
