@@ -31,10 +31,21 @@
 
             // Convert search parameters to an object
             const jsonData = {};
-            for (const [key, value] of params.entries()) {
-                // Decode the value to handle special characters
-                jsonData[key] = decodeURIComponent(value);
-            }
+            params.forEach((value, key) => {
+                const keys = key.split('][');
+                let current = jsonData;
+                for (let i = 0; i < keys.length; i++) {
+                    const k = keys[i].replace(/[\[\]]/g, '');
+                    if (i === keys.length - 1) {
+                        current[k] = decodeURIComponent(value);
+                    } else {
+                        if (!current[k]) {
+                            current[k] = isNaN(keys[i + 1]) ? {} : [];
+                        }
+                        current = current[k];
+                    }
+                }
+            });
 
             // Log the decoded JSON data
             console.log(jsonData);
@@ -42,7 +53,7 @@
             // If you need to convert it to a JSON string
             const jsonString = JSON.stringify(jsonData, null, 2);
             console.log(jsonString);
-            return jsonString
+            return jsonString;
         }
 
 
