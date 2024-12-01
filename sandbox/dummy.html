@@ -40,8 +40,10 @@ document.getElementById('textField').value = decodedDataString;
 
 function submit_data() {
     tfv = document.getElementById('textField').value;
-    const data = JSON.stringify({data: tfv});
-    Telegram.WebApp.sendData(data);
+    let encodedData = encodeURIComponent(JSON.stringify(tfv));
+    console.log(encodedData);
+<!--    const data = JSON.stringify({data: tfv});-->
+    Telegram.WebApp.sendData(encodedData);
     Telegram.WebApp.close();
 }
 
