@@ -18,7 +18,7 @@
 <script>
     window.Telegram.WebApp.enableClosingConfirmation()
 
-    // Function to decode JSON from URL parameters
+        // Function to decode JSON from URL parameters
         function decodeJsonFromUrl() {
             // Get the current URL
             const url = window.location.href;
@@ -27,21 +27,23 @@
             const urlObj = new URL(url);
 
             // Get the search parameters
-            const params = urlObj.search.substring(1); // Remove the leading '?'
+            const params = new URLSearchParams(urlObj.search);
 
-            // Parse the query string using qs
-            const jsonData = qs.parse(params, { indices: false });
+            // Convert search parameters to an object
+            const jsonData = {};
+            for (const [key, value] of params.entries()) {
+                // Decode the value to handle special characters
+                jsonData[key] = decodeURIComponent(value);
+            }
 
             // Log the decoded JSON data
-<!--            console.log(jsonData);-->
+            console.log(jsonData);
 
             // If you need to convert it to a JSON string
             const jsonString = JSON.stringify(jsonData, null, 2);
-<!--            console.log(jsonString);-->
+            console.log(jsonString);
             return jsonString
         }
-
-        // Call the function to decode JSON from URL parameters
 
 
 
