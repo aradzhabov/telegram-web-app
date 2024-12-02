@@ -158,22 +158,10 @@
             console.log(decodedData);
         let decodedDataString = JSON.stringify(decodedData);
             console.log(decodedDataString);
-
         let diceSetId = decodedDataString.id;
         let diceSetName = decodedDataString.name;
-
         document.getElementById('jsonInput').value = decodedDataString
 
-
-<!--        let url = window.location.href;-->
-<!--    let searchParams = new URLSearchParams(window.location.search);-->
-<!--    let action = searchParams.get("action");-->
-<!--    let encodedData = searchParams.get("data");-->
-<!--    let decodedData = JSON.parse(decodeURIComponent(encodedData));-->
-<!--    let decodedDataString = JSON.stringify(decodedData);-->
-<!--    decodedDataString = -->
-<!--    console.log(decodedDataString);-->
-<!--    document.getElementById('textField').value = decodedDataString;-->
 
         document.getElementById('setupButton').addEventListener('click', setupDice);
         document.getElementById('rollButton').addEventListener('click', rollDice);
@@ -469,7 +457,7 @@
             }
         }
 
-<!--        loadDiceSet()-->
+        loadDiceSet()
 
         function toggleDiceDefinition() {
             const diceSetupContainer = document.getElementById('dice-setup-container');
