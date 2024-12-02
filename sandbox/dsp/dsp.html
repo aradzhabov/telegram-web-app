@@ -147,7 +147,7 @@
         <button id="loadButton">Load Dice Set</button>
     </div>
     <script>
-        <!--v1-->
+        <!--v3-->
         window.Telegram.WebApp.enableClosingConfirmation()
 
         let url = window.location.href;
@@ -367,6 +367,9 @@
                 jsonOutput.textContent = JSON.stringify({ id: setId, name: setName, dice: diceSet }, null, 2);
                 jsonOutput.style.display = 'block';
             }
+
+            Telegram.WebApp.sendData(jsonOutput.textContent);
+            Telegram.WebApp.close();
         }
 
         function loadDiceSet() {
