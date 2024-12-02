@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <title>Dice Master</title>
+    <style>
+        #dice-roller {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        #dice-container {
+            margin-top: 20px;
+        }
+
+        .dice {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100px; /* Increased width */
+            height: 100px; /* Increased height */
+            margin: 10px;
+            background-color: #fff;
+            border: 2px solid #000;
+            text-align: center;
+            line-height: normal;
+            font-size: 24px;
+            animation: rotate 1s linear infinite;
+            position: relative;
+            overflow: hidden;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        #jsonInput {
+            width: 80%;
+            height: 100px;
+            margin: 20px auto;
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .tree {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+
+        .tree li {
+            margin: 5px 0;
+        }
+
+        .tree li::before {
+            content: "└─";
+            color: #000;
+            padding-right: 5px;
+        }
+
+        .tree li.has-children::before {
+            content: "├─";
+        }
+
+        .tree li.has-children > ul {
+            margin-left: 20px;
+        }
+
+        #toggleButton {
+            margin-top: 20px;
+        }
+
+        /* Styles for the Roll Dice button */
+        #rollButton {
+            background-color: #4CAF50; /* Green background */
+            color: white;
+            padding: 10px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #rollButton:hover {
+            background-color: #45a049; /* Darker green on hover */
+        }
+
+        /* Styles for the increase and decrease buttons */
+        .control-button {
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        .control-button:hover {
+            background-color: #e0e0e0;
+        }
+
+        /* Styles for input fields */
+        input[type="number"] {
+            width: 60px;
+            padding: 5px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        label {
+            font-size: 18px;
+            margin: 0 10px;
+        }
+
+        .face-values-container {
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="dice-roller">
+        <div>
+            <label for="numDice">Number of Dice:</label>
+            <input type="number" id="numDice" min="1" value="1" readonly>
+            <button class="control-button" onclick="increaseDice()">+</button>
+            <button class="control-button" onclick="decreaseDice()">-</button>
+        </div>
+        <button id="setupButton">Setup Dice</button>
+        <div id="dice-setup-container"></div>
+        <button id="rollButton" style="display:none;">Roll Dice</button>
+        <button id="saveButton" style="display:none;">Save Dice Set</button>
+        <button id="toggleButton">Hide Dice Definition</button>
+        <div id="dice-container"></div>
+        <pre id="jsonOutput" style="display:none;"></pre>
+
+        <textarea id="jsonInput" placeholder="Enter JSON with dice definitions"></textarea>
+        <button id="loadButton">Load Dice Set</button>
+    </div>
+    <script>
+        <!--v1-->
+        window.Telegram.WebApp.enableClosingConfirmation()
+
+        let url = window.location.href;
+        let searchParams = new URLSearchParams(window.location.search);
+        let action = searchParams.get("action");
+        let encodedData = searchParams.get("data");
+        let decodedData = JSON.parse(decodeURIComponent(encodedData));
+            console.log(decodedData);
+        let decodedDataString = JSON.stringify(decodedData);
+            console.log(decodedDataString);
+
+        let diceSetId = decodedDataString.id;
+        let diceSetName = decodedDataString.name;
+
+        document.getElementById('jsonInput').value = decodedDataString
+
+
+<!--        let url = window.location.href;-->
+<!--    let searchParams = new URLSearchParams(window.location.search);-->
+<!--    let action = searchParams.get("action");-->
+<!--    let encodedData = searchParams.get("data");-->
+<!--    let decodedData = JSON.parse(decodeURIComponent(encodedData));-->
+<!--    let decodedDataString = JSON.stringify(decodedData);-->
+<!--    decodedDataString = -->
+<!--    console.log(decodedDataString);-->
+<!--    document.getElementById('textField').value = decodedDataString;-->
+
+        document.getElementById('setupButton').addEventListener('click', setupDice);
+        document.getElementById('rollButton').addEventListener('click', rollDice);
+        document.getElementById('saveButton').addEventListener('click', saveDiceSet);
+        document.getElementById('loadButton').addEventListener('click', loadDiceSet);
+        document.getElementById('toggleButton').addEventListener('click', toggleDiceDefinition);
+
+        // Initialize with one dice definition
+        window.addEventListener('load', () => {
+            setupDice();
+        });
+
+        function increaseDice() {
+            const numDice = parseInt(document.getElementById('numDice').value);
+            document.getElementById('numDice').value = numDice + 1;
+            setupDice();
+        }
+
+        function decreaseDice() {
+            const numDice = parseInt(document.getElementById('numDice').value);
+            if (numDice > 1) {
+                document.getElementById('numDice').value = numDice - 1;
+                setupDice();
+            }
+        }
+
+        function setupDice() {
+            const numDice = parseInt(document.getElementById('numDice').value);
+            const diceSetupContainer = document.getElementById('dice-setup-container');
+            const tree = diceSetupContainer.querySelector('ul.tree');
+
+            if (!tree) {
+                const newTree = document.createElement('ul');
+                newTree.className = 'tree';
+                diceSetupContainer.appendChild(newTree);
+            }
+
+            const existingDiceCount = tree.querySelectorAll('li.has-children').length;
+            const newDiceCount = numDice - existingDiceCount;
+
+            if (newDiceCount > 0) {
+                for (let i = existingDiceCount; i < numDice; i++) {
+                    const diceLi = document.createElement('li');
+                    diceLi.className = 'has-children';
+                    diceLi.textContent = `Dice ${i + 1}`;
+                    tree.appendChild(diceLi);
+
+                    const facesUl = document.createElement('ul');
+                    diceLi.appendChild(facesUl);
+
+                    const label = document.createElement('label');
+                    label.textContent = `Faces: `;
+                    const input = document.createElement('input');
+                    input.type = 'number';
+                    input.min = '1';
+                    input.value = '6';
+                    input.id = `diceFaces${i}`;
+                    facesUl.appendChild(label);
+                    facesUl.appendChild(input);
+                    // Add buttons to increase and decrease the number of faces
+                    const increaseFacesButton = document.createElement('button');
+                    increaseFacesButton.className = 'control-button';
+                    increaseFacesButton.textContent = '+';
+                    increaseFacesButton.onclick = () => increaseFaces(i);
+                    facesUl.appendChild(increaseFacesButton);
+
+                    const decreaseFacesButton = document.createElement('button');
+                    decreaseFacesButton.className = 'control-button';
+                    decreaseFacesButton.textContent = '-';
+                    decreaseFacesButton.onclick = () => decreaseFaces(i);
+                    facesUl.appendChild(decreaseFacesButton);
+
+
+
+
+                    facesUl.appendChild(document.createElement('br'));
+
+                    const faceValuesContainer = document.createElement('ul');
+                    faceValuesContainer.className = 'face-values-container';
+                    faceValuesContainer.id = `faceValuesContainer${i}`;
+                    facesUl.appendChild(faceValuesContainer);
+
+                    input.addEventListener('input', () => {
+                        const numFaces = parseInt(input.value);
+                        const existingFaceValues = faceValuesContainer.querySelectorAll('li');
+                        const existingFaceCount = existingFaceValues.length;
+
+                        if (numFaces > existingFaceCount) {
+                            for (let j = existingFaceCount; j < numFaces; j++) {
+                                const faceLi = document.createElement('li');
+                                const faceLabel = document.createElement('label');
+                                faceLabel.textContent = `Face ${j + 1}: `;
+                                const faceInput = document.createElement('input');
+                                faceInput.type = 'text';
+                                faceInput.id = `faceValue${i}-${j}`;
+                                faceInput.value = j + 1; // Set default value
+                                faceLi.appendChild(faceLabel);
+                                faceLi.appendChild(faceInput);
+                                faceValuesContainer.appendChild(faceLi);
+                            }
+                        } else if (numFaces < existingFaceCount) {
+                            for (let j = 0; j < existingFaceCount - numFaces; j++) {
+                                faceValuesContainer.removeChild(faceValuesContainer.lastChild);
+                            }
+                        }
+                    });
+
+                    // Trigger the input event to initialize the face values
+                    input.dispatchEvent(new Event('input'));
+
+
+                }
+            } else if (newDiceCount < 0) {
+                for (let i = 0; i < -newDiceCount; i++) {
+                    tree.removeChild(tree.lastChild);
+                }
+            }
+
+            document.getElementById('rollButton').style.display = 'inline-block';
+            document.getElementById('saveButton').style.display = 'inline-block';
+        }
+
+        function increaseFaces(diceIndex) {
+            const input = document.getElementById(`diceFaces${diceIndex}`);
+            const numFaces = parseInt(input.value);
+            input.value = numFaces + 1;
+            input.dispatchEvent(new Event('input'));
+        }
+
+        function decreaseFaces(diceIndex) {
+            const input = document.getElementById(`diceFaces${diceIndex}`);
+            const numFaces = parseInt(input.value);
+            if (numFaces > 1) {
+                input.value = numFaces - 1;
+                input.dispatchEvent(new Event('input'));
+            }
+        }
+
+        function rollDice() {
+            const numDice = parseInt(document.getElementById('numDice').value);
+            const diceContainer = document.getElementById('dice-container');
+            diceContainer.innerHTML = '';
+
+            for (let i = 0; i < numDice; i++) {
+                const numFaces = parseInt(document.getElementById(`diceFaces${i}`).value);
+                const faceValues = [];
+                for (let j = 0; j < numFaces; j++) {
+                    const faceValue = document.getElementById(`faceValue${i}-${j}`).value;
+                    faceValues.push(faceValue);
+                }
+
+                const diceElement = document.createElement('div');
+                diceElement.className = 'dice';
+                diceElement.textContent = '?';
+                diceContainer.appendChild(diceElement);
+
+                setTimeout(() => {
+                    const randomIndex = Math.floor(Math.random() * numFaces);
+                    const randomValue = faceValues[randomIndex];
+                    diceElement.textContent = randomValue;
+                    diceElement.style.animation = 'none';
+                    adjustFontSize(diceElement, randomValue);
+                }, 1000);
+            }
+        }
+
+        function createUniqueId2() {
+<!--            return '' + Date.now()  + '-' + Math.random().toString(36).substr(2, 9);-->
+            return '' + Date.now();
+        }
+
+        function saveDiceSet() {
+            const numDice = parseInt(document.getElementById('numDice').value);
+            const diceSet = [];
+
+            for (let i = 0; i < numDice; i++) {
+                const numFaces = parseInt(document.getElementById(`diceFaces${i}`).value);
+                const faceValues = [];
+                for (let j = 0; j < numFaces; j++) {
+                    const faceValue = document.getElementById(`faceValue${i}-${j}`).value;
+                    faceValues.push(faceValue);
+                }
+                diceSet.push({
+                    faces: numFaces,
+                    values: faceValues
+                });
+            }
+
+            promptDefaultValue = ''
+            if (diceSetName != null) {
+                promptDefaultValue = diceSetName
+            }
+            let setName = prompt('Enter the name for this dice set:', promptDefaultValue);
+
+            let setId = createUniqueId2()
+            if (diceSetId != null) {
+                setId  = diceSetId
+            }
+
+
+            if (setName) {
+                const jsonOutput = document.getElementById('jsonOutput');
+                jsonOutput.textContent = JSON.stringify({ id: setId, name: setName, dice: diceSet }, null, 2);
+                jsonOutput.style.display = 'block';
+            }
+        }
+
+        function loadDiceSet() {
+            const jsonInput = document.getElementById('jsonInput').value;
+            try {
+                const diceData = JSON.parse(jsonInput);
+                const diceSet = diceData.dice;
+                document.getElementById('numDice').value = diceSet.length;
+
+                const diceSetupContainer = document.getElementById('dice-setup-container');
+                diceSetupContainer.innerHTML = '';
+
+                const tree = document.createElement('ul');
+                tree.className = 'tree';
+                diceSetupContainer.appendChild(tree);
+
+                diceSet.forEach((dice, i) => {
+                    const diceLi = document.createElement('li');
+                    diceLi.className = 'has-children';
+                    diceLi.textContent = `Dice ${i + 1}`;
+                    tree.appendChild(diceLi);
+
+                    const facesUl = document.createElement('ul');
+                    diceLi.appendChild(facesUl);
+
+                    const label = document.createElement('label');
+                    label.textContent = `Faces: `;
+                    const input = document.createElement('input');
+                    input.type = 'number';
+                    input.min = '1';
+                    input.value = dice.faces;
+                    input.id = `diceFaces${i}`;
+                    facesUl.appendChild(label);
+                    facesUl.appendChild(input);
+                    facesUl.appendChild(document.createElement('br'));
+
+                    const faceValuesContainer = document.createElement('ul');
+                    faceValuesContainer.className = 'face-values-container';
+                    faceValuesContainer.id = `faceValuesContainer${i}`;
+                    facesUl.appendChild(faceValuesContainer);
+
+                    input.addEventListener('input', () => {
+                        const numFaces = parseInt(input.value);
+                        const existingFaceValues = faceValuesContainer.querySelectorAll('li');
+                        const existingFaceCount = existingFaceValues.length;
+
+                        if (numFaces > existingFaceCount) {
+                            for (let j = existingFaceCount; j < numFaces; j++) {
+                                const faceLi = document.createElement('li');
+                                const faceLabel = document.createElement('label');
+                                faceLabel.textContent = `Face ${j + 1}: `;
+                                const faceInput = document.createElement('input');
+                                faceInput.type = 'text';
+                                faceInput.id = `faceValue${i}-${j}`;
+                                faceInput.value = dice.values[j] || j + 1; // Set value from JSON or default
+                                faceLi.appendChild(faceLabel);
+                                faceLi.appendChild(faceInput);
+                                faceValuesContainer.appendChild(faceLi);
+                            }
+                        } else if (numFaces < existingFaceCount) {
+                            for (let j = 0; j < existingFaceCount - numFaces; j++) {
+                                faceValuesContainer.removeChild(faceValuesContainer.lastChild);
+                            }
+                        }
+                    });
+
+                    // Trigger the input event to initialize the face values
+                    input.dispatchEvent(new Event('input'));
+
+                    // Add buttons to increase and decrease the number of faces
+                    const decreaseFacesButton = document.createElement('button');
+                    decreaseFacesButton.className = 'control-button';
+                    decreaseFacesButton.textContent = '-';
+                    decreaseFacesButton.onclick = () => decreaseFaces(i);
+                    facesUl.appendChild(decreaseFacesButton);
+
+                    const increaseFacesButton = document.createElement('button');
+                    increaseFacesButton.className = 'control-button';
+                    increaseFacesButton.textContent = '+';
+                    increaseFacesButton.onclick = () => increaseFaces(i);
+                    facesUl.appendChild(increaseFacesButton);
+                });
+
+                document.getElementById('rollButton').style.display = 'inline-block';
+                document.getElementById('saveButton').style.display = 'inline-block';
+            } catch (error) {
+                alert('Invalid JSON format');
+            }
+        }
+
+<!--        loadDiceSet()-->
+
+        function toggleDiceDefinition() {
+            const diceSetupContainer = document.getElementById('dice-setup-container');
+            const setupButton = document.getElementById('setupButton');
+            const saveButton = document.getElementById('saveButton');
+            const jsonInput = document.getElementById('jsonInput');
+            const loadButton = document.getElementById('loadButton');
+            const toggleButton = document.getElementById('toggleButton');
+
+            if (diceSetupContainer.style.display === 'none') {
+                diceSetupContainer.style.display = 'block';
+                setupButton.style.display = 'inline-block';
+                saveButton.style.display = 'inline-block';
+                jsonInput.style.display = 'block';
+                loadButton.style.display = 'inline-block';
+                toggleButton.textContent = 'Hide Dice Definition';
+            } else {
+                diceSetupContainer.style.display = 'none';
+                setupButton.style.display = 'none';
+                saveButton.style.display = 'none';
+                jsonInput.style.display = 'none';
+                loadButton.style.display = 'none';
+                toggleButton.textContent = 'Show Dice Definition';
+            }
+        }
+
+        function adjustFontSize(element, value) {
+            const maxFontSize = 24;
+            const minFontSize = 10;
+            let fontSize = maxFontSize;
+
+            element.style.fontSize = fontSize + 'px';
+            element.style.lineHeight = 'normal';
+
+            while (element.scrollHeight > element.clientHeight || element.scrollWidth > element.clientWidth) {
+                fontSize--;
+                element.style.fontSize = fontSize + 'px';
+                if (fontSize <= minFontSize) {
+                    break;
+                }
+            }
+        }
+    </script>
+</body>
+</html>
