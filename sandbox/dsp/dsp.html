@@ -47,6 +47,7 @@
             border: 2px solid #ccc;
             border-radius: 5px;
             font-size: 16px;
+            display: none;
         }
 
         .tree {
@@ -117,6 +118,15 @@
             text-align: center;
         }
 
+        input[type="text"] {
+            width: 200px;
+            padding: 5px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            text-align: center;
+        }
+
         label {
             font-size: 18px;
             margin: 0 10px;
@@ -130,6 +140,10 @@
 <body>
     <div id="dice-roller">
         <div>
+            <div>
+                <label for="nameDice">Name for set:</label>
+                <input type="text" id="nameDice" value="My imagination"/>
+            </div>
             <label for="numDice">Number of Dice:</label>
             <input type="number" id="numDice" min="1" value="1" readonly>
             <button class="control-button" onclick="increaseDice()">+</button>
@@ -144,7 +158,7 @@
         <pre id="jsonOutput" style="display:none;"></pre>
 
         <textarea id="jsonInput" placeholder="Enter JSON with dice definitions"></textarea>
-        <button id="loadButton">Load Dice Set</button>
+        <button id="loadButton" style="display: none;">Load Dice Set</button>
     </div>
     <script>
         <!--v3-->
@@ -153,14 +167,21 @@
         let url = window.location.href;
         let searchParams = new URLSearchParams(window.location.search);
         let action = searchParams.get("action");
+        action = 'new'
+        let is_save_available = searchParams.get("is_save_available");
+        is_save_available = 'yes'
         let encodedData = searchParams.get("data");
+
         let decodedData = JSON.parse(decodeURIComponent(encodedData));
             console.log(decodedData);
         let decodedDataString = JSON.stringify(decodedData);
             console.log(decodedDataString);
         let diceSetId = decodedDataString.id;
         let diceSetName = decodedDataString.name;
-        document.getElementById('jsonInput').value = decodedDataString
+
+        if (is_save_available == 'yes') {
+            document.getElementById('jsonInput').value = decodedDataString
+        }
 
 
         document.getElementById('setupButton').addEventListener('click', setupDice);
@@ -281,7 +302,11 @@
             }
 
             document.getElementById('rollButton').style.display = 'inline-block';
-            document.getElementById('saveButton').style.display = 'inline-block';
+            if (is_save_available == 'yes') {
+                document.getElementById('saveButton').style.display = 'inline-block';
+            }
+
+
         }
 
         function increaseFaces(diceIndex) {
@@ -354,7 +379,8 @@
             if (diceSetName != null) {
                 promptDefaultValue = diceSetName
             }
-            let setName = prompt('Enter the name for this dice set:', promptDefaultValue);
+<!--            let setName = prompt('Enter the name for this dice set:', promptDefaultValue);-->
+            let setName =  document.getElementById(`nameDice`).value;
 
             let setId = createUniqueId2()
             if (diceSetId != null) {
@@ -362,11 +388,11 @@
             }
 
 
-            if (setName) {
-                const jsonOutput = document.getElementById('jsonOutput');
-                jsonOutput.textContent = JSON.stringify({ id: setId, name: setName, dice: diceSet }, null, 2);
-                jsonOutput.style.display = 'block';
-            }
+<!--            if (setName) {-->
+<!--                const jsonOutput = document.getElementById('jsonOutput');-->
+<!--                jsonOutput.textContent = JSON.stringify({ id: setId, name: setName, dice: diceSet }, null, 2);-->
+<!--                jsonOutput.style.display = 'block';-->
+<!--            }-->
 
             Telegram.WebApp.sendData(jsonOutput.textContent);
             Telegram.WebApp.close();
@@ -454,13 +480,14 @@
                 });
 
                 document.getElementById('rollButton').style.display = 'inline-block';
-                document.getElementById('saveButton').style.display = 'inline-block';
+                if (is_save_available == 'yes') {
+                    document.getElementById('saveButton').style.display = 'inline-block';
+                }
             } catch (error) {
                 alert('Invalid JSON format');
             }
         }
 
-        loadDiceSet()
 
         function toggleDiceDefinition() {
             const diceSetupContainer = document.getElementById('dice-setup-container');
@@ -473,16 +500,18 @@
             if (diceSetupContainer.style.display === 'none') {
                 diceSetupContainer.style.display = 'block';
                 setupButton.style.display = 'inline-block';
-                saveButton.style.display = 'inline-block';
-                jsonInput.style.display = 'block';
-                loadButton.style.display = 'inline-block';
+                if (is_save_available == 'yes') {
+                    saveButton.style.display = 'inline-block';
+                }
+<!--                jsonInput.style.display = 'none';-->
+<!--                loadButton.style.display = 'none';-->
                 toggleButton.textContent = 'Hide Dice Definition';
             } else {
                 diceSetupContainer.style.display = 'none';
                 setupButton.style.display = 'none';
                 saveButton.style.display = 'none';
-                jsonInput.style.display = 'none';
-                loadButton.style.display = 'none';
+<!--                jsonInput.style.display = 'none';-->
+<!--                loadButton.style.display = 'none';-->
                 toggleButton.textContent = 'Show Dice Definition';
             }
         }
@@ -503,6 +532,19 @@
                 }
             }
         }
+
+        if (action == 'edit' || action == 'play' ) {
+            loadDiceSet()
+        }
+
+<!--        const saveButton = document.getElementById('saveButton');-->
+<!--        if (action == 'new' && is_save_available == 'no') {-->
+<!--            saveButton.style.display === 'none'-->
+<!--        }-->
+<!--        if (action == 'new' && is_save_available == 'yes') {-->
+<!--            saveButton.style.display === 'none'-->
+<!--        }-->
+
     </script>
 </body>
 </html>
