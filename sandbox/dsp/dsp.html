@@ -167,9 +167,9 @@
         let url = window.location.href;
         let searchParams = new URLSearchParams(window.location.search);
         let action = searchParams.get("action");
-        action = 'new'
+<!--        action = 'new'-->
         let is_save_available = searchParams.get("is_save_available");
-        is_save_available = 'yes'
+<!--        is_save_available = 'yes'-->
         let encodedData = searchParams.get("data");
 
         let decodedData = JSON.parse(decodeURIComponent(encodedData));
