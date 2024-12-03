@@ -507,6 +507,7 @@
             const jsonInput = document.getElementById('jsonInput');
             const loadButton = document.getElementById('loadButton');
             const toggleButton = document.getElementById('toggleButton');
+            const nameDice = document.getElementById('nameDice');
 
             if (diceSetupContainer.style.display === 'none') {
                 diceSetupContainer.style.display = 'block';
@@ -546,6 +547,16 @@
 
         if (action == 'edit' || action == 'play' ) {
             loadDiceSet()
+        }
+
+        if (action == 'play' ) {
+            nameDice.readOnly = true;
+            saveButton.style.display = 'none'
+            setupButton.style.display = 'none'
+            saveButton.style.display = 'none'
+            loadButton.style.display = 'none'
+<!--            diceSetupContainer-->
+
         }
 
 <!--        const saveButton = document.getElementById('saveButton');-->
