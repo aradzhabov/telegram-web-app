@@ -390,7 +390,7 @@
             if (setName) {
                 const jsonOutput = document.getElementById('jsonOutput');
                 jsonOutput.textContent = JSON.stringify({ id: setId, name: setName, dice: diceSet }, null, 2);
-<!--                jsonOutput.style.display = 'block';-->
+                jsonOutput.style.display = 'block';
             }
 
             Telegram.WebApp.sendData(jsonOutput.textContent);
