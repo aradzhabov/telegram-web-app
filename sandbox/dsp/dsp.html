@@ -403,7 +403,7 @@
                 const diceData = JSON.parse(jsonInput);
                 const diceSet = diceData.dice;
                 document.getElementById('numDice').value = diceSet.length;
-
+                document.getElementById('nameDice').value = diceData.name;
                 const diceSetupContainer = document.getElementById('dice-setup-container');
                 diceSetupContainer.innerHTML = '';
 
