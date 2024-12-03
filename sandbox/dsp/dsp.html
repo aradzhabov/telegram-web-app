@@ -381,18 +381,17 @@
             }
 <!--            let setName = prompt('Enter the name for this dice set:', promptDefaultValue);-->
             let setName =  document.getElementById(`nameDice`).value;
-
             let setId = createUniqueId2()
             if (diceSetId != null) {
                 setId  = diceSetId
             }
 
 
-<!--            if (setName) {-->
-<!--                const jsonOutput = document.getElementById('jsonOutput');-->
-<!--                jsonOutput.textContent = JSON.stringify({ id: setId, name: setName, dice: diceSet }, null, 2);-->
+            if (setName) {
+                const jsonOutput = document.getElementById('jsonOutput');
+                jsonOutput.textContent = JSON.stringify({ id: setId, name: setName, dice: diceSet }, null, 2);
 <!--                jsonOutput.style.display = 'block';-->
-<!--            }-->
+            }
 
             Telegram.WebApp.sendData(jsonOutput.textContent);
             Telegram.WebApp.close();
