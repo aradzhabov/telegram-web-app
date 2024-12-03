@@ -173,9 +173,14 @@
         let encodedData = searchParams.get("data");
 
         let decodedData = JSON.parse(decodeURIComponent(encodedData));
-            console.log(decodedData);
+
+        let idDice = ''
+        if (action == 'edit' || action == 'play') {
+            idDice = decodedData.id
+        }
+<!--            console.log(decodedData);-->
         let decodedDataString = JSON.stringify(decodedData);
-            console.log(decodedDataString);
+<!--            console.log(decodedDataString);-->
         let diceSetId = decodedDataString.id;
         let diceSetName = decodedDataString.name;
 
@@ -381,15 +386,22 @@
             }
 <!--            let setName = prompt('Enter the name for this dice set:', promptDefaultValue);-->
             let setName =  document.getElementById(`nameDice`).value;
-            let setId = createUniqueId2()
-            if (diceSetId != null) {
-                setId  = diceSetId
+
+            if (action == 'edit') {
+                idDice = decodedData.id
             }
+            else {
+                idDice = createUniqueId2()
+            }
+<!--            let setId = createUniqueId2()-->
+<!--            if (diceSetId != null) {-->
+<!--                setId  = diceSetId-->
+<!--            }-->
 
 
             if (setName) {
                 const jsonOutput = document.getElementById('jsonOutput');
-                jsonOutput.textContent = JSON.stringify({ id: setId, name: setName, dice: diceSet }, null, 2);
+                jsonOutput.textContent = JSON.stringify({ id: idDice, name: setName, dice: diceSet }, null, 2);
                 jsonOutput.style.display = 'block';
             }
 
