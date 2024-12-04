@@ -141,6 +141,13 @@
     <div id="dice-roller">
         <div>
             <div>
+              <div  id="monthlyPayment" style="color: lightgrey; display: block;">
+                  <button style="border-radius: 50%;" onclick="document.getElementById('monthlyPayment').style.display = (document.getElementById('monthlyPayment').style.display === 'none') ? 'block' : 'none';">close &#8620;</button>
+              You are free to build and play but to save/load<br>
+                unlim sets of dice you need to be subscribed to the <a href="https://t.me/+ggCC4_5795tjZTQy">channel</a><br>
+                  with a little monthly payment in Telegram Stars
+                      <p>
+              </div>
                 <label for="nameDice">Name for set:</label>
                 <input type="text" id="nameDice" value="My imagination"/>
             </div>
@@ -161,15 +168,24 @@
         <button id="loadButton" style="display: none;">Load Dice Set</button>
     </div>
     <script>
-        <!--v3-->
-        window.Telegram.WebApp.enableClosingConfirmation()
-
+        <!--v5-->
         let url = window.location.href;
         let searchParams = new URLSearchParams(window.location.search);
         let action = searchParams.get("action");
 <!--        action = 'new'-->
+
+        if (action == 'edit') {
+           window.Telegram.WebApp.enableClosingConfirmation()
+        }
+
         let is_save_available = searchParams.get("is_save_available");
-<!--        is_save_available = 'yes'-->
+<!--        is_save_available = 'no'-->
+
+        if (is_save_available == 'yes') {
+            monthlyPayment = document.getElementById('monthlyPayment');
+            monthlyPayment.style.display = 'none';
+        }
+
         let encodedData = searchParams.get("data");
 
         let decodedData = JSON.parse(decodeURIComponent(encodedData));
