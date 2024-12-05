@@ -217,9 +217,9 @@
         <button id="setupButton">Setup Dice</button>
         <div id="dice-setup-container"></div>
         <div id="menu-buttons">
-      <button id="infoButton" onclick="document.getElementById('monthlyPayment').style.display = (document.getElementById('monthlyPayment').style.display === 'none') ? 'block' : 'none';">&#9432;</button>
+      <button id="infoButton" onclick="document.getElementById('monthlyPayment').style.display = (document.getElementById('monthlyPayment').style.display === 'none') ? 'block' : 'none';">ⓘ</button>
         <button id="rollButton" style="display:inline-block;">Roll Dice</button>
-        <button id="toggleButton">Hide settings</button>
+        <button id="toggleButton">Hide⚙</button>
         <button id="saveButton" style="display:none;">Save</button>
         </div>
         <div id="dice-container"></div>
@@ -600,14 +600,14 @@
 <!--                }-->
 <!--                jsonInput.style.display = 'none';-->
 <!--                loadButton.style.display = 'none';-->
-                toggleButton.textContent = 'Hide settings';
+                toggleButton.textContent = 'Hide⚙';
             } else {
                 diceSetupContainer.style.display = 'none';
 <!--                setupButton.style.display = 'none';-->
 <!--                saveButton.style.display = 'none';-->
 <!--                jsonInput.style.display = 'none';-->
 <!--                loadButton.style.display = 'none';-->
-                toggleButton.textContent = 'Show settings';
+                toggleButton.textContent = 'Show⚙';
             }
         }
 
