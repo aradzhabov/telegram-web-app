@@ -77,7 +77,7 @@
             background-color: blue; /* Green background */
             color: white;
             padding: 5px 10px;
-            font-size: 15px;
+            font-size: 17px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
@@ -88,7 +88,7 @@
             background-color: orange; /* Green background */
             color: white;
             padding: 5px 10px;
-            font-size: 15px;
+            font-size: 17px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
@@ -100,7 +100,18 @@
             background-color: #4CAF50; /* Green background */
             color: white;
             padding: 5px 10px;
-            font-size: 15px;
+            font-size: 17px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #infoButton {
+            background-color: light-blue;
+            color: white;
+            padding: 5px 10px;
+            font-size: 17px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
@@ -167,18 +178,7 @@
           z-index: 1000;
         }
 
-<!--                #info {-->
-<!--          position: fixed;-->
-<!--          top: 0;-->
-<!--          left: 50%;-->
-<!--          transform: translateX(-50%);-->
-<!--          display: flex;-->
-<!--          flex-direction: row;-->
-<!--          align-items: center;-->
-<!--          padding: 5px;-->
-<!--&lt;!&ndash;          background-color: #f8f9fa;&ndash;&gt;-->
-<!--          z-index: 1000;-->
-<!--        }-->
+
 
     </style>
 </head>
@@ -188,18 +188,18 @@
 
         <div>
             <div>
-                <div id="info">
-                    <table align="center">
+                <div>
+                    <table align="center" >
                         <tr>
                             <td>
-                              <button onclick="document.getElementById('monthlyPayment').style.display = (document.getElementById('monthlyPayment').style.display === 'none') ? 'block' : 'none';">&#9432;</button>
+
                             </td>
                             <td>
-                              <div  id="monthlyPayment" style="color: lightgrey; display: block;">
-                              You are free to build and play but to save/load<br>
-                                unlim sets of dice you need to be subscribed to the <a href="https://t.me/+ggCC4_5795tjZTQy">channel</a><br>
-                                  with a little monthly payment in Telegram Stars
-                                      <p>
+                              <div  id="monthlyPayment" style="color: grey; display: block;">
+                              You are free to build and play<br>but to save/load
+                                unlim number of sets you need to be subscribed to the <a href="https://t.me/+ggCC4_5795tjZTQy">channel</a><br>
+                                  with a little monthly payment in Telegram Stars.<br>
+                                  Click &#9432; in the top menu to hide/show this message.<p></p>
                               </div>
                             </td>
 
@@ -217,6 +217,7 @@
         <button id="setupButton">Setup Dice</button>
         <div id="dice-setup-container"></div>
         <div id="menu-buttons">
+      <button id="infoButton" onclick="document.getElementById('monthlyPayment').style.display = (document.getElementById('monthlyPayment').style.display === 'none') ? 'block' : 'none';">&#9432;</button>
         <button id="rollButton" style="display:inline-block;">Roll Dice</button>
         <button id="toggleButton">Hide settings</button>
         <button id="saveButton" style="display:none;">Save</button>
