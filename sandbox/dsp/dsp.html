@@ -73,16 +73,34 @@
             margin-left: 20px;
         }
 
+         #saveButton {
+            background-color: blue; /* Green background */
+            color: white;
+            padding: 5px 10px;
+            font-size: 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
         #toggleButton {
-            margin-top: 20px;
+            background-color: orange; /* Green background */
+            color: white;
+            padding: 5px 10px;
+            font-size: 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
         }
 
         /* Styles for the Roll Dice button */
         #rollButton {
             background-color: #4CAF50; /* Green background */
             color: white;
-            padding: 10px 20px;
-            font-size: 18px;
+            padding: 5px 10px;
+            font-size: 15px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
@@ -135,19 +153,59 @@
         .face-values-container {
             margin-left: 20px;
         }
+
+        #menu-buttons {
+          position: fixed;
+          top: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          padding: 5px;
+<!--          background-color: #f8f9fa;-->
+          z-index: 1000;
+        }
+
+<!--                #info {-->
+<!--          position: fixed;-->
+<!--          top: 0;-->
+<!--          left: 50%;-->
+<!--          transform: translateX(-50%);-->
+<!--          display: flex;-->
+<!--          flex-direction: row;-->
+<!--          align-items: center;-->
+<!--          padding: 5px;-->
+<!--&lt;!&ndash;          background-color: #f8f9fa;&ndash;&gt;-->
+<!--          z-index: 1000;-->
+<!--        }-->
+
     </style>
 </head>
 <body>
+
     <div id="dice-roller">
+
         <div>
             <div>
-              <div  id="monthlyPayment" style="color: lightgrey; display: block;">
-                  <button style="border-radius: 50%;" onclick="document.getElementById('monthlyPayment').style.display = (document.getElementById('monthlyPayment').style.display === 'none') ? 'block' : 'none';">close &#8620;</button>
-              You are free to build and play but to save/load<br>
-                unlim sets of dice you need to be subscribed to the <a href="https://t.me/+ggCC4_5795tjZTQy">channel</a><br>
-                  with a little monthly payment in Telegram Stars
-                      <p>
-              </div>
+                <div id="info">
+                    <table align="center">
+                        <tr>
+                            <td>
+                              <button onclick="document.getElementById('monthlyPayment').style.display = (document.getElementById('monthlyPayment').style.display === 'none') ? 'block' : 'none';">&#9432;</button>
+                            </td>
+                            <td>
+                              <div  id="monthlyPayment" style="color: lightgrey; display: block;">
+                              You are free to build and play but to save/load<br>
+                                unlim sets of dice you need to be subscribed to the <a href="https://t.me/+ggCC4_5795tjZTQy">channel</a><br>
+                                  with a little monthly payment in Telegram Stars
+                                      <p>
+                              </div>
+                            </td>
+
+                        </tr>
+                    </table>
+        </div>
                 <label for="nameDice">Name for set:</label>
                 <input type="text" id="nameDice" value="My imagination"/>
             </div>
@@ -158,9 +216,11 @@
         </div>
         <button id="setupButton">Setup Dice</button>
         <div id="dice-setup-container"></div>
-        <button id="rollButton" style="display:none;">Roll Dice</button>
-        <button id="saveButton" style="display:none;">Save Dice Set</button>
-        <button id="toggleButton">Hide Dice Definition</button>
+        <div id="menu-buttons">
+        <button id="rollButton" style="display:inline-block;">Roll Dice</button>
+        <button id="toggleButton">Hide settings</button>
+        <button id="saveButton" style="display:none;">Save</button>
+        </div>
         <div id="dice-container"></div>
         <pre id="jsonOutput" style="display:none;"></pre>
 
@@ -184,6 +244,8 @@
         if (is_save_available == 'yes') {
             monthlyPayment = document.getElementById('monthlyPayment');
             monthlyPayment.style.display = 'none';
+            saveButton = document.getElementById('saveButton');
+            saveButton.style.display = 'inline-block';
         }
 
         let encodedData = searchParams.get("data");
@@ -322,10 +384,10 @@
                 }
             }
 
-            document.getElementById('rollButton').style.display = 'inline-block';
-            if (is_save_available == 'yes') {
-                document.getElementById('saveButton').style.display = 'inline-block';
-            }
+<!--            document.getElementById('rollButton').style.display = 'inline-block';-->
+<!--            if (is_save_available == 'yes') {-->
+<!--                document.getElementById('saveButton').style.display = 'inline-block';-->
+<!--            }-->
 
 
         }
@@ -347,6 +409,10 @@
         }
 
         function rollDice() {
+            const diceSetupContainer = document.getElementById('dice-setup-container');
+            if (diceSetupContainer.style.display != 'none') {
+                toggleDiceDefinition()
+            }
             const numDice = parseInt(document.getElementById('numDice').value);
             const diceContainer = document.getElementById('dice-container');
             diceContainer.innerHTML = '';
@@ -519,7 +585,7 @@
         function toggleDiceDefinition() {
             const diceSetupContainer = document.getElementById('dice-setup-container');
             const setupButton = document.getElementById('setupButton');
-            const saveButton = document.getElementById('saveButton');
+<!--            const saveButton = document.getElementById('saveButton');-->
             const jsonInput = document.getElementById('jsonInput');
             const loadButton = document.getElementById('loadButton');
             const toggleButton = document.getElementById('toggleButton');
@@ -528,19 +594,19 @@
             if (diceSetupContainer.style.display === 'none') {
                 diceSetupContainer.style.display = 'block';
                 setupButton.style.display = 'inline-block';
-                if (is_save_available == 'yes') {
-                    saveButton.style.display = 'inline-block';
-                }
+<!--                if (is_save_available == 'yes') {-->
+<!--                    saveButton.style.display = 'inline-block';-->
+<!--                }-->
 <!--                jsonInput.style.display = 'none';-->
 <!--                loadButton.style.display = 'none';-->
-                toggleButton.textContent = 'Hide Dice Definition';
+                toggleButton.textContent = 'Hide settings';
             } else {
                 diceSetupContainer.style.display = 'none';
-                setupButton.style.display = 'none';
-                saveButton.style.display = 'none';
+<!--                setupButton.style.display = 'none';-->
+<!--                saveButton.style.display = 'none';-->
 <!--                jsonInput.style.display = 'none';-->
 <!--                loadButton.style.display = 'none';-->
-                toggleButton.textContent = 'Show Dice Definition';
+                toggleButton.textContent = 'Show settings';
             }
         }
 
@@ -567,7 +633,6 @@
 
         if (action == 'play' ) {
             nameDice.readOnly = true;
-            saveButton.style.display = 'none'
             setupButton.style.display = 'none'
             saveButton.style.display = 'none'
             loadButton.style.display = 'none'
