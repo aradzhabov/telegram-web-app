@@ -696,6 +696,19 @@
 <!--            saveButton.style.display === 'none'-->
 <!--        }-->
 
+                function handleBlur(event) {
+            // Remove focus from the input field
+            event.target.blur();
+        }
+
+        // Select all input elements
+        const inputFields = document.querySelectorAll('input');
+
+        // Attach the blur event listener to each input field
+        inputFields.forEach(function(input) {
+            input.addEventListener('blur', handleBlur);
+        });
+
     </script>
 </body>
 </html>
