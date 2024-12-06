@@ -218,7 +218,7 @@
         <div id="menu-buttons">
             <button style="background-color: white; color: #33adff;" id="infoButton" onclick="document.getElementById('monthlyPayment').style.display = (document.getElementById('monthlyPayment').style.display === 'none') ? 'block' : 'none';"><span style="background-color: white; color: #33adff;">ⓘ</span></button>
         <button id="rollButton" style="display:inline-block;">Roll</button>
-        <button id="setupButton" style="display:block;">Setup Dice</button>
+        <button id="setupButton" style="display:none;">Setup Dice</button>
         <button id="toggleButton">Hide⣦</button>
         <button id="saveButton" style="display:none;">Save</button>
 <!--        <textarea rows="1" id="diceNameInPlayMode" readonly></textarea>-->
@@ -230,6 +230,13 @@
     </div>
     <script>
         <!--v5-->
+
+        function isIOS() {
+            return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        }
+
+
+
         let url = window.location.href;
         let searchParams = new URLSearchParams(window.location.search);
 
@@ -278,6 +285,10 @@
 
         if (action == 'edit') {
            window.Telegram.WebApp.enableClosingConfirmation()
+        }
+
+        if (isIOS()) {
+            setupButton.style.display = 'block'
         }
 
 
@@ -695,32 +706,6 @@
 <!--        if (action == 'new' && is_save_available == 'yes') {-->
 <!--            saveButton.style.display === 'none'-->
 <!--        }-->
-
-
-        // Function to handle clicks outside the text fields
-        function handleClickOutside(event) {
-            // Select all input elements
-            const textFields = document.querySelectorAll('input[type="text"]');
-
-            // Check if the click is outside any text field
-            let isClickOutside = true;
-            textFields.forEach(function(textField) {
-                if (textField === event.target) {
-                    isClickOutside = false;
-                }
-            });
-
-            // If the click is outside any text field, blur all text fields
-            if (isClickOutside) {
-                textFields.forEach(function(textField) {
-                    textField.blur();
-                });
-                alert('hi');
-            }
-        }
-
-        // Add event listener to the document for click events
-        document.addEventListener('click', handleClickOutside);
 
     </script>
 </body>
