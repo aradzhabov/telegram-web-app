@@ -233,7 +233,7 @@
         let url = window.location.href;
         let searchParams = new URLSearchParams(window.location.search);
         let action = searchParams.get("action");
-<!--        action = 'new'-->
+        action = 'play'
 
         let is_save_available = searchParams.get("is_save_available");
 <!--        is_save_available = 'no'-->
@@ -250,10 +250,10 @@
         if (action == 'play') {
             toggleButton = document.getElementById('toggleButton');
             toggleButton.style.display = 'none';
-            dice-setup-container = document.getElementById('dice-setup-container');
-            dice-setup-container.style.display = 'none';
-            dice_name_num = document.getElementById('dice_name_num');
-            dice_name_num.style.display = 'none';
+            dsp = document.getElementById('dice-setup-container');
+            dsp.style.display = 'none';
+            dnn = document.getElementById('dice_name_num');
+            dnn.style.display = 'none';
         }
 
         if (action == 'edit') {
