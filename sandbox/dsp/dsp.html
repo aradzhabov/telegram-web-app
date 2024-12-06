@@ -218,9 +218,9 @@
         <div id="menu-buttons">
             <button style="background-color: white; color: #33adff;" id="infoButton" onclick="document.getElementById('monthlyPayment').style.display = (document.getElementById('monthlyPayment').style.display === 'none') ? 'block' : 'none';"><span style="background-color: white; color: #33adff;">ⓘ</span></button>
         <button id="rollButton" style="display:inline-block;">Roll</button>
-        <button id="setupButton" style="display:none;">Setup Dice</button>
         <button id="toggleButton">Hide⣦</button>
         <button id="saveButton" style="display:none;">Save</button>
+        <button id="setupButton" style="display:none;">hide ios ⌨</button>
 <!--        <textarea rows="1" id="diceNameInPlayMode" readonly></textarea>-->
         </div>
         <div id="dice-container"></div>
@@ -456,6 +456,7 @@
         }
 
         function rollDice() {
+            setupDice()  // добавил тк если открывать как просто страничку те не как http то многие функции не рабоают а так работают
             const diceSetupContainer = document.getElementById('dice-setup-container');
             if (diceSetupContainer.style.display != 'none') {
                 toggleDiceDefinition()
