@@ -221,6 +221,7 @@
         <button id="setupButton">Setup Dice</button>
         <button id="toggleButton">Hide⣦</button>
         <button id="saveButton" style="display:none;">Save</button>
+        <label id="diceNameInPlayMode"></label>
         </div>
         <div id="dice-container"></div>
         <pre id="jsonOutput" style="display:none;"></pre>
@@ -249,6 +250,10 @@
         if (action == 'play') {
             toggleButton = document.getElementById('toggleButton');
             toggleButton.style.display = 'none';
+            dice-setup-container = document.getElementById('dice-setup-container');
+            dice-setup-container.style.display = 'none';
+            dice_name_num = document.getElementById('dice_name_num');
+            dice_name_num.style.display = 'none';
         }
 
         if (action == 'edit') {
@@ -268,6 +273,10 @@
 <!--            console.log(decodedDataString);-->
         let diceSetId = decodedDataString.id;
         let diceSetName = decodedDataString.name;
+
+        if (action == 'play') {
+            document.getElementById('diceNameInPlayMode').value = diceSetName
+        }
 
         if (is_save_available == 'yes') {
             document.getElementById('jsonInput').value = decodedDataString
