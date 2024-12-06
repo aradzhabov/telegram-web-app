@@ -218,7 +218,7 @@
         <div id="menu-buttons">
             <button style="background-color: white; color: #33adff;" id="infoButton" onclick="document.getElementById('monthlyPayment').style.display = (document.getElementById('monthlyPayment').style.display === 'none') ? 'block' : 'none';"><span style="background-color: white; color: #33adff;">ⓘ</span></button>
         <button id="rollButton" style="display:inline-block;">Roll</button>
-        <button id="setupButton">Setup Dice</button>
+        <button id="setupButton" style="display:none;">Setup Dice</button>
         <button id="toggleButton">Hide⣦</button>
         <button id="saveButton" style="display:none;">Save</button>
 <!--        <textarea rows="1" id="diceNameInPlayMode" readonly></textarea>-->
@@ -232,11 +232,25 @@
         <!--v5-->
         let url = window.location.href;
         let searchParams = new URLSearchParams(window.location.search);
-        let action = searchParams.get("action");
+
+        let action = 'add'
+        if (searchParams.has("action")) {
+            action = searchParams.get("action");
+        }
+
+        let is_save_available = 'no'
+        if (searchParams.has("is_save_available")) {
+            is_save_available = searchParams.get("is_save_available");
+        }
+
+
+<!--        let action = searchParams.get("action");-->
 <!--        action = 'play'-->
 
-        let is_save_available = searchParams.get("is_save_available");
+<!--        let is_save_available = searchParams.get("is_save_available");-->
 <!--        is_save_available = 'no'-->
+
+
 
         if (is_save_available == 'yes') {
             infoButton = document.getElementById('infoButton');
