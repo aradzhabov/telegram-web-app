@@ -253,7 +253,8 @@
             diceSetupContainer = document.getElementById('dice-setup-container');
             diceSetupContainer.style.display = 'none';
             dnn = document.getElementById('dice_name_num');
-            dnn.style.display = 'none';
+            document.getElementById('dnn').readOnly = true;
+<!--            dnn.style.display = 'none';-->
             setupButton.style.display = 'none'
             saveButton = document.getElementById('saveButton');
             saveButton.style.display = 'none';
@@ -670,7 +671,7 @@
 <!--        if (action == 'play' ) {-->
 <!--            nameDice.readOnly = true;-->
 <!--            setupButton.style.display = 'none'-->
-<!--            saveButton.style.display = 'none'-->
+                saveButton.style.display = 'none'
 <!--            loadButton.style.display = 'none'-->
 <!--            dsp.style.display = 'none'-->
 <!--            toggleButton.style.display = 'none'-->
