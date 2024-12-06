@@ -234,22 +234,29 @@
         let action = searchParams.get("action");
 <!--        action = 'new'-->
 
-        if (action == 'edit') {
-           window.Telegram.WebApp.enableClosingConfirmation()
-        }
-
         let is_save_available = searchParams.get("is_save_available");
 <!--        is_save_available = 'no'-->
 
         if (is_save_available == 'yes') {
+            infoButton = document.getElementById('infoButton');
+            infoButton.style.display = 'none';
             monthlyPayment = document.getElementById('monthlyPayment');
             monthlyPayment.style.display = 'none';
             saveButton = document.getElementById('saveButton');
             saveButton.style.display = 'inline-block';
         }
 
-        let encodedData = searchParams.get("data");
+        if (action == 'play') {
+            toggleButton = document.getElementById('toggleButton');
+            toggleButton.style.display = 'none';
+        }
 
+        if (action == 'edit') {
+           window.Telegram.WebApp.enableClosingConfirmation()
+        }
+
+
+        let encodedData = searchParams.get("data");
         let decodedData = JSON.parse(decodeURIComponent(encodedData));
 
         let idDice = ''
@@ -605,7 +612,9 @@
 <!--                jsonInput.style.display = 'none';-->
 <!--                loadButton.style.display = 'none';-->
                 toggleButton.textContent = 'Hide⣦';
-                infoButton.style.display = 'block';
+                if (is_save_available == 'no') {
+                    infoButton.style.display = 'block';
+                }
             } else {
                 diceSetupContainer.style.display = 'none';
 <!--                setupButton.style.display = 'none';-->
@@ -614,7 +623,9 @@
 <!--                loadButton.style.display = 'none';-->
                 toggleButton.textContent = 'Show⣦';
                 dice_name_num.style.display = 'none';
-                infoButton.style.display = 'none';
+                if (is_save_available == 'no') {
+                    infoButton.style.display = 'none';
+                }
             }
         }
 
