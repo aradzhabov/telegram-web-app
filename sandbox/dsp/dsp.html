@@ -218,7 +218,7 @@
         <div id="menu-buttons">
             <button style="background-color: white; color: #33adff;" id="infoButton" onclick="document.getElementById('monthlyPayment').style.display = (document.getElementById('monthlyPayment').style.display === 'none') ? 'block' : 'none';"><span style="background-color: white; color: #33adff;">ⓘ</span></button>
         <button id="rollButton" style="display:inline-block;">Roll</button>
-        <button id="setupButton" style="display:none;">Setup Dice</button>
+        <button id="setupButton" style="display:block;">Setup Dice</button>
         <button id="toggleButton">Hide⣦</button>
         <button id="saveButton" style="display:none;">Save</button>
 <!--        <textarea rows="1" id="diceNameInPlayMode" readonly></textarea>-->
@@ -696,18 +696,31 @@
 <!--            saveButton.style.display === 'none'-->
 <!--        }-->
 
-                function handleBlur(event) {
-            // Remove focus from the input field
-            event.target.blur();
+
+        // Function to handle clicks outside the text fields
+        function handleClickOutside(event) {
+            // Select all input elements
+            const textFields = document.querySelectorAll('input[type="text"]');
+
+            // Check if the click is outside any text field
+            let isClickOutside = true;
+            textFields.forEach(function(textField) {
+                if (textField === event.target) {
+                    isClickOutside = false;
+                }
+            });
+
+            // If the click is outside any text field, blur all text fields
+            if (isClickOutside) {
+                textFields.forEach(function(textField) {
+                    textField.blur();
+                });
+                alert('hi');
+            }
         }
 
-        // Select all input elements
-        const inputFields = document.querySelectorAll('input');
-
-        // Attach the blur event listener to each input field
-        inputFields.forEach(function(input) {
-            input.addEventListener('blur', handleBlur);
-        });
+        // Add event listener to the document for click events
+        document.addEventListener('click', handleClickOutside);
 
     </script>
 </body>
