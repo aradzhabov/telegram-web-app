@@ -180,32 +180,31 @@
 
 
 
+
+
     </style>
 </head>
 <body>
 
     <div id="dice-roller">
-
-        <div>
+        <div id="dice_name_num">
             <div>
                 <div>
                     <table align="center" >
                         <tr>
                             <td>
-
                             </td>
                             <td>
                               <div  id="monthlyPayment" style="color: grey; display: block;">
                               You are free to build and play<br>but to save/load
                                 unlim number of sets you need to be subscribed to the <a href="https://t.me/+ggCC4_5795tjZTQy">channel</a><br>
                                   with a little monthly payment in Telegram Stars.<br>
-                                  Click &#9432; in the top menu to hide/show this message.<p></p>
+                                  Click <span style="background-color: white; color: #33adff;">ⓘ</span> in the top menu to hide/show this message.<p></p>
                               </div>
                             </td>
-
                         </tr>
                     </table>
-        </div>
+                </div>
                 <label for="nameDice">Name for set:</label>
                 <input type="text" id="nameDice" value="My imagination"/>
             </div>
@@ -214,17 +213,17 @@
             <button class="control-button" onclick="increaseDice()">+</button>
             <button class="control-button" onclick="decreaseDice()">-</button>
         </div>
-        <button id="setupButton">Setup Dice</button>
+
         <div id="dice-setup-container"></div>
         <div id="menu-buttons">
-      <button id="infoButton" onclick="document.getElementById('monthlyPayment').style.display = (document.getElementById('monthlyPayment').style.display === 'none') ? 'block' : 'none';">ⓘ</button>
+            <button style="background-color: white; color: #33adff;" id="infoButton" onclick="document.getElementById('monthlyPayment').style.display = (document.getElementById('monthlyPayment').style.display === 'none') ? 'block' : 'none';"><span style="background-color: white; color: #33adff;">ⓘ</span></button>
         <button id="rollButton" style="display:inline-block;">Roll</button>
-        <button id="toggleButton">Hide⚙</button>
+        <button id="setupButton">Setup Dice</button>
+        <button id="toggleButton">Hide⣦</button>
         <button id="saveButton" style="display:none;">Save</button>
         </div>
         <div id="dice-container"></div>
         <pre id="jsonOutput" style="display:none;"></pre>
-
         <textarea id="jsonInput" placeholder="Enter JSON with dice definitions"></textarea>
         <button id="loadButton" style="display: none;">Load Dice Set</button>
     </div>
@@ -591,23 +590,31 @@
             const loadButton = document.getElementById('loadButton');
             const toggleButton = document.getElementById('toggleButton');
             const nameDice = document.getElementById('nameDice');
+            const dice_name_num = document.getElementById('dice_name_num');
+            const infoButton = document.getElementById('infoButton');
+
+
 
             if (diceSetupContainer.style.display === 'none') {
                 diceSetupContainer.style.display = 'block';
                 setupButton.style.display = 'inline-block';
+                dice_name_num.style.display = 'block';
 <!--                if (is_save_available == 'yes') {-->
 <!--                    saveButton.style.display = 'inline-block';-->
 <!--                }-->
 <!--                jsonInput.style.display = 'none';-->
 <!--                loadButton.style.display = 'none';-->
-                toggleButton.textContent = 'Hide⚙';
+                toggleButton.textContent = 'Hide⣦';
+                infoButton.style.display = 'block';
             } else {
                 diceSetupContainer.style.display = 'none';
 <!--                setupButton.style.display = 'none';-->
 <!--                saveButton.style.display = 'none';-->
 <!--                jsonInput.style.display = 'none';-->
 <!--                loadButton.style.display = 'none';-->
-                toggleButton.textContent = 'Show⚙';
+                toggleButton.textContent = 'Show⣦';
+                dice_name_num.style.display = 'none';
+                infoButton.style.display = 'none';
             }
         }
 
@@ -628,8 +635,13 @@
             }
         }
 
+        if (action == 'new') {
+            setupDice()
+        }
+
         if (action == 'edit' || action == 'play' ) {
             loadDiceSet()
+
         }
 
         if (action == 'play' ) {
