@@ -236,10 +236,16 @@
         let url = window.location.href;
         let searchParams = new URLSearchParams(window.location.search);
 
-        let action = 'add'
-        if (searchParams.has("action")) {
-            action = searchParams.get("action");
+        function getQueryParam(param) {
+            // Decode the URL to handle HTML entities
+            const decodedUrl = decodeURIComponent(url);
+            const urlParams = new URLSearchParams(new URL(decodedUrl).search);
+            return urlParams.get(param);
         }
+        let action = getQueryParam('action');
+<!--        if (searchParams.has("action")) {-->
+<!--            action = searchParams.get("action");-->
+<!--        }-->
 
         let is_save_available = 'no'
         if (searchParams.has("is_save_available")) {
