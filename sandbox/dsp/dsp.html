@@ -236,31 +236,15 @@
         let url = window.location.href;
         let searchParams = new URLSearchParams(window.location.search);
 
-        function getQueryParam(param) {
-            // Decode the URL to handle HTML entities
-            const decodedUrl = decodeURIComponent(url);
-            const urlParams = new URLSearchParams(new URL(decodedUrl).search);
-            return urlParams.get(param);
+        let action = 'new'
+        if (searchParams.has("action")) {
+            action = searchParams.get("action");
         }
-        let action = getQueryParam('action');
-<!--        if (searchParams.has("action")) {-->
-<!--            action = searchParams.get("action");-->
-<!--        }-->
 
         let is_save_available = 'no'
         if (searchParams.has("is_save_available")) {
             is_save_available = searchParams.get("is_save_available");
         }
-<!--        action = 'new'-->
-<!--        is_save_available = 'no'-->
-
-<!--        let action = searchParams.get("action");-->
-
-
-<!--        let is_save_available = searchParams.get("is_save_available");-->
-
-
-
 
         if (is_save_available == 'yes') {
             infoButton = document.getElementById('infoButton');
