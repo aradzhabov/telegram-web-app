@@ -216,7 +216,7 @@
         <button id="rollButton" style="display:inline-block;">Roll</button>
         <button id="toggleButton">Hide⣦</button>
         <button id="saveButton" style="display:none;">Save</button>
-        <button id="setupButton" style="display:none;">hide ios ⌨</button>
+        <button id="setupButton" style="display:none; font-size: 16px;">hide ios ⌨</button>
 <!--        <textarea rows="1" id="diceNameInPlayMode" readonly></textarea>-->
         </div>
         <div id="dice-container"></div>
@@ -273,7 +273,7 @@
            window.Telegram.WebApp.enableClosingConfirmation()
         }
 
-        if (isIOS()) {
+        if (isIOS() && (action != 'play')) {
             setupButton.style.display = 'block'
         }
 
