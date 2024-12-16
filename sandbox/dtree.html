@@ -3,105 +3,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cytoscape.js Example</title>
-    <script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
+    <title>D3.js Mind Map Example</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
-        #cy {
-            width: 100%;
-            height: 600px;
-            display: block;
+        .node {
+            stroke: #fff;
+            stroke-width: 1.5px;
+        }
+
+        .link {
+            stroke: #999;
+            stroke-opacity: 0.6;
         }
     </style>
 </head>
 <body>
-    <div id="cy"></div>
+    <svg width="960" height="600"></svg>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var cy = cytoscape({
-                container: document.getElementById('cy'),
-                elements: {
-                    nodes: [
-                        { data: { id: 'start', label: 'Starting the assessment...' } },
-                        { data: { id: 'q1', label: 'Can you see?' } },
-                        { data: { id: 'q1_yes', label: 'Yes, I can see.' } },
-                        { data: { id: 'q3', label: 'Can you read text?' } },
-                        { data: { id: 'q3_yes', label: 'Yes, I can read text.' } },
-                        { data: { id: 'q4', label: 'Can you distinguish colors?' } },
-                        { data: { id: 'q4_yes', label: 'Yes, I can distinguish colors.' } },
-                        { data: { id: 'q5', label: 'Can you control a mouse?' } },
-                        { data: { id: 'q5_yes', label: 'Yes, I can control a mouse.' } },
-                        { data: { id: 'final_solution', label: 'Here is the best solution for you based on your responses.' } },
-                        { data: { id: 'q1_no', label: 'No, I cannot see.' } },
-                        { data: { id: 'q6', label: 'Can you turn your head?' } },
-                        { data: { id: 'q6_yes', label: 'Yes, I can turn my head.' } },
-                        { data: { id: 'q6_no', label: 'No, I cannot turn my head.' } },
-                        { data: { id: 'q3_no', label: 'No, I cannot read text.' } },
-                        { data: { id: 'q4_no', label: 'No, I cannot distinguish colors.' } },
-                        { data: { id: 'q5_no', label: 'No, I cannot control a mouse.' } },
-                        { data: { id: 'q2', label: 'Can you hear?' } },
-                        { data: { id: 'q2_yes', label: 'Yes, I can hear.' } },
-                        { data: { id: 'q2_no', label: 'No, I cannot hear.' } }
-                    ],
-                    edges: [
-                        { data: { id: 'e1', source: 'start', target: 'q1' } },
-                        { data: { id: 'e2', source: 'start', target: 'q2' } },
-                        { data: { id: 'e3', source: 'q1', target: 'q1_yes' } },
-                        { data: { id: 'e4', source: 'q1', target: 'q1_no' } },
-                        { data: { id: 'e5', source: 'q1_yes', target: 'q3' } },
-                        { data: { id: 'e6', source: 'q3', target: 'q3_yes' } },
-                        { data: { id: 'e7', source: 'q3', target: 'q3_no' } },
-                        { data: { id: 'e8', source: 'q3_yes', target: 'q4' } },
-                        { data: { id: 'e9', source: 'q4', target: 'q4_yes' } },
-                        { data: { id: 'e10', source: 'q4', target: 'q4_no' } },
-                        { data: { id: 'e11', source: 'q4_yes', target: 'q5' } },
-                        { data: { id: 'e12', source: 'q5', target: 'q5_yes' } },
-                        { data: { id: 'e13', source: 'q5', target: 'q5_no' } },
-                        { data: { id: 'e14', source: 'q5_yes', target: 'final_solution' } },
-                        { data: { id: 'e15', source: 'q5_no', target: 'q6' } },
-                        { data: { id: 'e16', source: 'q6', target: 'q6_yes' } },
-                        { data: { id: 'e17', source: 'q6', target: 'q6_no' } },
-                        { data: { id: 'e18', source: 'q6_yes', target: 'final_solution' } },
-                        { data: { id: 'e19', source: 'q6_no', target: 'final_solution' } },
-                        { data: { id: 'e20', source: 'q3_no', target: 'q6' } },
-                        { data: { id: 'e21', source: 'q4_no', target: 'q6' } },
-                        { data: { id: 'e22', source: 'q1_no', target: 'q6' } },
-                        { data: { id: 'e23', source: 'q2', target: 'q2_yes' } },
-                        { data: { id: 'e24', source: 'q2', target: 'q2_no' } },
-                        { data: { id: 'e25', source: 'q2_yes', target: 'q5' } },
-                        { data: { id: 'e26', source: 'q2_no', target: 'q6' } }
-                    ]
-                },
-                style: [
-                    {
-                        selector: 'node',
-                        style: {
-                            'background-color': '#666',
-                            'label': 'data(label)',
-                            'text-valign': 'center',
-                            'text-halign': 'center',
-                            'color': 'white',
-                            'font-size': '12px'
-                        }
-                    },
-                    {
-                        selector: 'edge',
-                        style: {
-                            'width': 2,
-                            'line-color': '#ccc',
-                            'target-arrow-color': '#ccc',
-                            'target-arrow-shape': 'triangle',
-                            'curve-style': 'bezier'
-                        }
-                    }
-                ],
-                layout: {
-                    name: 'breadthfirst',
-                    directed: true,
-                    roots: '#start',
-                    padding: 10
-                }
+        const graph = {
+            nodes: [
+                { id: "start", label: "Starting the assessment..." },
+                { id: "q1", label: "Can you see?" },
+                { id: "q1_yes", label: "Yes, I can see." },
+                { id: "q3", label: "Can you read text?" },
+                { id: "q3_yes", label: "Yes, I can read text." },
+                { id: "q4", label: "Can you distinguish colors?" },
+                { id: "q4_yes", label: "Yes, I can distinguish colors." },
+                { id: "q5", label: "Can you control a mouse?" },
+                { id: "q5_yes", label: "Yes, I can control a mouse." },
+                { id: "final_solution", label: "Here is the best solution for you based on your responses." },
+                { id: "q1_no", label: "No, I cannot see." },
+                { id: "q6", label: "Can you turn your head?" },
+                { id: "q6_yes", label: "Yes, I can turn my head." },
+                { id: "q6_no", label: "No, I cannot turn my head." },
+                { id: "q3_no", label: "No, I cannot read text." },
+                { id: "q4_no", label: "No, I cannot distinguish colors." },
+                { id: "q5_no", label: "No, I cannot control a mouse." },
+                { id: "q2", label: "Can you hear?" },
+                { id: "q2_yes", label: "Yes, I can hear." },
+                { id: "q2_no", label: "No, I cannot hear." }
+            ],
+            links: [
+                { source: "start", target: "q1" },
+                { source: "start", target: "q2" },
+                { source: "q1", target: "q1_yes" },
+                { source: "q1", target: "q1_no" },
+                { source: "q1_yes", target: "q3" },
+                { source: "q3", target: "q3_yes" },
+                { source: "q3", target: "q3_no" },
+                { source: "q3_yes", target: "q4" },
+                { source: "q4", target: "q4_yes" },
+                { source: "q4", target: "q4_no" },
+                { source: "q4_yes", target: "q5" },
+                { source: "q5", target: "q5_yes" },
+                { source: "q5", target: "q5_no" },
+                { source: "q5_yes", target: "final_solution" },
+                { source: "q5_no", target: "q6" },
+                { source: "q6", target: "q6_yes" },
+                { source: "q6", target: "q6_no" },
+                { source: "q6_yes", target: "final_solution" },
+                { source: "q6_no", target: "final_solution" },
+                { source: "q3_no", target: "q6" },
+                { source: "q4_no", target: "q6" },
+                { source: "q1_no", target: "q6" },
+                { source: "q2", target: "q2_yes" },
+                { source: "q2", target: "q2_no" },
+                { source: "q2_yes", target: "q5" },
+                { source: "q2_no", target: "q6" }
+            ]
+        };
+
+        const width = 960;
+        const height = 600;
+
+        const svg = d3.select("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+        const simulation = d3.forceSimulation(graph.nodes)
+            .force("link", d3.forceLink(graph.links).id(d => d.id).distance(150))
+            .force("charge", d3.forceManyBody().strength(-400))
+            .force("center", d3.forceCenter(width / 2, height / 2));
+
+        const link = svg.append("g")
+            .selectAll("line")
+            .data(graph.links)
+            .enter().append("line")
+            .attr("class", "link")
+            .style("stroke-width", 1.5);
+
+        const node = svg.append("g")
+            .selectAll("circle")
+            .data(graph.nodes)
+            .enter().append("circle")
+            .attr("class", "node")
+            .attr("r", 5)
+            .call(d3.drag()
+                .on("start", dragstarted)
+                .on("drag", dragged)
+                .on("end", dragended));
+
+        const label = svg.append("g")
+            .selectAll("text")
+            .data(graph.nodes)
+            .enter().append("text")
+            .attr("class", "label")
+            .attr("x", d => d.x)
+            .attr("y", d => d.y)
+            .attr("dy", -3)
+            .text(d => d.label);
+
+        simulation
+            .on("tick", () => {
+                link
+                    .attr("x1", d => d.source.x)
+                    .attr("y1", d => d.source.y)
+                    .attr("x2", d => d.target.x)
+                    .attr("y2", d => d.target.y);
+
+                node
+                    .attr("cx", d => d.x)
+                    .attr("cy", d => d.y);
+
+                label
+                    .attr("x", d => d.x)
+                    .attr("y", d => d.y);
             });
-        });
+
+        function dragstarted(event, d) {
+            if (!event.active) simulation.alphaTarget(0.3).restart();
+            d.fx = d.x;
+            d.fy = d.y;
+        }
+
+        function dragged(event, d) {
+            d.fx = event.x;
+            d.fy = event.y;
+        }
+
+        function dragended(event, d) {
+            if (!event.active) simulation.alphaTarget(0);
+            d.fx = null;
+            d.fy = null;
+        }
     </script>
 </body>
 </html>
