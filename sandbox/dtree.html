@@ -1,39 +1,302 @@
-<html>
-  <head>
-    <link type="text/css" rel="stylesheet" href="//cdn.jsdelivr.net/npm/jsmind@0.8.5/style/jsmind.css" />
-    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/jsmind@0.8.5/es6/jsmind.js"></script>
-  </head>
-  <body>
-    <div id="jsmind_container" style="width: 800px; height: 500px;"></div>
-<script type="text/javascript">
-<!--    var mind = {-->
-<!--    "meta":{-->
-<!--        "name":"example",-->
-<!--        "author":"hizzgdev@163.com",-->
-<!--        "version":"0.2"-->
-<!--    },-->
-<!--    "format":"freemind",-->
-<!--    "data":"<map version=\"1.0.1\"> <node ID=\"root\" TEXT=\"jsMind\" > <node ID=\"easy\" POSITION=\"left\" TEXT=\"Easy\" > <node ID=\"easy1\" TEXT=\"Easy to show\" /> <node ID=\"easy2\" TEXT=\"Easy to edit\" /> <node ID=\"easy3\" TEXT=\"Easy to store\" /> <node ID=\"easy4\" TEXT=\"Easy to embed\" /> </node> <node ID=\"open\" POSITION=\"right\" TEXT=\"Open Source\" > <node ID=\"open1\" TEXT=\"on GitHub\" /> <node ID=\"open2\" TEXT=\"BSD License\" /> </node> <node ID=\"powerful\" POSITION=\"right\" TEXT=\"Powerful\" > <node ID=\"powerful1\" TEXT=\"Base on Javascript\" /> <node ID=\"powerful2\" TEXT=\"Base on HTML5\" /> <node ID=\"powerful3\" TEXT=\"Depends on you\" /> </node> <node ID=\"other\" POSITION=\"left\" TEXT=\"test node\" > <node ID=\"other1\" TEXT=\"I'm from local variable\" /> <node ID=\"other2\" TEXT=\"I can do everything\" /> </node> </node> </map>"-->
-<!--    };-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jsTree Example</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.12/themes/default/style.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.12/jstree.min.js"></script>
+</head>
+<body>
+    <div id="jstree"></div>
+    <script>
+        $(function () {
+            var jsonData = {
+                "id": "start",
+                "text": "Starting the assessment...",
+                "children": [
+                    {
+                        "id": "q1",
+                        "text": "Can you see?",
+                        "children": [
+                            {
+                                "id": "q1_yes",
+                                "text": "Yes, I can see.",
+                                "children": [
+                                    {
+                                        "id": "q3",
+                                        "text": "Can you read text?",
+                                        "children": [
+                                            {
+                                                "id": "q3_yes",
+                                                "text": "Yes, I can read text.",
+                                                "children": [
+                                                    {
+                                                        "id": "q4",
+                                                        "text": "Can you distinguish colors?",
+                                                        "children": [
+                                                            {
+                                                                "id": "q4_yes",
+                                                                "text": "Yes, I can distinguish colors.",
+                                                                "children": [
+                                                                    {
+                                                                        "id": "q5",
+                                                                        "text": "Can you control a mouse?",
+                                                                        "children": [
+                                                                            {
+                                                                                "id": "q5_yes",
+                                                                                "text": "Yes, I can control a mouse.",
+                                                                                "children": [
+                                                                                    {
+                                                                                        "id": "final_solution",
+                                                                                        "text": "Here is the best solution for you based on your responses."
+                                                                                    }
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                "id": "q5_no",
+                                                                                "text": "No, I cannot control a mouse.",
+                                                                                "children": [
+                                                                                    {
+                                                                                        "id": "q6",
+                                                                                        "text": "Can you turn your head?",
+                                                                                        "children": [
+                                                                                            {
+                                                                                                "id": "q6_yes",
+                                                                                                "text": "Yes, I can turn my head.",
+                                                                                                "children": [
+                                                                                                    {
+                                                                                                        "id": "final_solution",
+                                                                                                        "text": "Here is the best solution for you based on your responses."
+                                                                                                    }
+                                                                                                ]
+                                                                                            },
+                                                                                            {
+                                                                                                "id": "q6_no",
+                                                                                                "text": "No, I cannot turn my head.",
+                                                                                                "children": [
+                                                                                                    {
+                                                                                                        "id": "final_solution",
+                                                                                                        "text": "Here is the best solution for you based on your responses."
+                                                                                                    }
+                                                                                                ]
+                                                                                            }
+                                                                                        ]
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "id": "q4_no",
+                                                                "text": "No, I cannot distinguish colors.",
+                                                                "children": [
+                                                                    {
+                                                                        "id": "q6",
+                                                                        "text": "Can you turn your head?",
+                                                                        "children": [
+                                                                            {
+                                                                                "id": "q6_yes",
+                                                                                "text": "Yes, I can turn my head.",
+                                                                                "children": [
+                                                                                    {
+                                                                                        "id": "final_solution",
+                                                                                        "text": "Here is the best solution for you based on your responses."
+                                                                                    }
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                "id": "q6_no",
+                                                                                "text": "No, I cannot turn my head.",
+                                                                                "children": [
+                                                                                    {
+                                                                                        "id": "final_solution",
+                                                                                        "text": "Here is the best solution for you based on your responses."
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "id": "q3_no",
+                                                "text": "No, I cannot read text.",
+                                                "children": [
+                                                    {
+                                                        "id": "q6",
+                                                        "text": "Can you turn your head?",
+                                                        "children": [
+                                                            {
+                                                                "id": "q6_yes",
+                                                                "text": "Yes, I can turn my head.",
+                                                                "children": [
+                                                                    {
+                                                                        "id": "final_solution",
+                                                                        "text": "Here is the best solution for you based on your responses."
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "id": "q6_no",
+                                                                "text": "No, I cannot turn my head.",
+                                                                "children": [
+                                                                    {
+                                                                        "id": "final_solution",
+                                                                        "text": "Here is the best solution for you based on your responses."
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "q1_no",
+                                "text": "No, I cannot see.",
+                                "children": [
+                                    {
+                                        "id": "q6",
+                                        "text": "Can you turn your head?",
+                                        "children": [
+                                            {
+                                                "id": "q6_yes",
+                                                "text": "Yes, I can turn my head.",
+                                                "children": [
+                                                    {
+                                                        "id": "final_solution",
+                                                        "text": "Here is the best solution for you based on your responses."
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "id": "q6_no",
+                                                "text": "No, I cannot turn my head.",
+                                                "children": [
+                                                    {
+                                                        "id": "final_solution",
+                                                        "text": "Here is the best solution for you based on your responses."
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "q2",
+                        "text": "Can you hear?",
+                        "children": [
+                            {
+                                "id": "q2_yes",
+                                "text": "Yes, I can hear.",
+                                "children": [
+                                    {
+                                        "id": "q5",
+                                        "text": "Can you control a mouse?",
+                                        "children": [
+                                            {
+                                                "id": "q5_yes",
+                                                "text": "Yes, I can control a mouse.",
+                                                "children": [
+                                                    {
+                                                        "id": "final_solution",
+                                                        "text": "Here is the best solution for you based on your responses."
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "id": "q5_no",
+                                                "text": "No, I cannot control a mouse.",
+                                                "children": [
+                                                    {
+                                                        "id": "q6",
+                                                        "text": "Can you turn your head?",
+                                                        "children": [
+                                                            {
+                                                                "id": "q6_yes",
+                                                                "text": "Yes, I can turn my head.",
+                                                                "children": [
+                                                                    {
+                                                                        "id": "final_solution",
+                                                                        "text": "Here is the best solution for you based on your responses."
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "id": "q6_no",
+                                                                "text": "No, I cannot turn my head.",
+                                                                "children": [
+                                                                    {
+                                                                        "id": "final_solution",
+                                                                        "text": "Here is the best solution for you based on your responses."
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "q2_no",
+                                "text": "No, I cannot hear.",
+                                "children": [
+                                    {
+                                        "id": "q6",
+                                        "text": "Can you turn your head?",
+                                        "children": [
+                                            {
+                                                "id": "q6_yes",
+                                                "text": "Yes, I can turn my head.",
+                                                "children": [
+                                                    {
+                                                        "id": "final_solution",
+                                                        "text": "Here is the best solution for you based on your responses."
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "id": "q6_no",
+                                                "text": "No, I cannot turn my head.",
+                                                "children": [
+                                                    {
+                                                        "id": "final_solution",
+                                                        "text": "Here is the best solution for you based on your responses."
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            };
 
-var mind = {
-    "meta":{
-        "name":"example",
-        "author":"hizzgdev@163.com",
-        "version":"0.2"
-    },
-    "format":"freemind","data":'<map version="1.0.1"><node CREATED="1734348547117" ID="ID_522207310" MODIFIED="1734348754098"><richcontent TYPE="NODE"><html><head></head><body><p>dddd</p></body></html></richcontent><node CREATED="1734348618055" ID="ID_751405688" MODIFIED="1734349146141" POSITION="right" STYLE="bubble" TEXT="1"><node CREATED="1734348625710" ID="ID_832673376" MODIFIED="1734348747699" TEXT="123"/><node CREATED="1734348769843" ID="ID_985193279" MODIFIED="1734348773626" TEXT="456"/><node CREATED="1734349150655" ID="ID_1670951222" MODIFIED="1734349157101" TEXT="789"/></node><node CREATED="1734348778614" FOLDED="true" ID="ID_310760227" MODIFIED="1734349137914" POSITION="left" TEXT="2"><node CREATED="1734349106758" ID="ID_1089559707" MODIFIED="1734349116990" TEXT="555"/></node></node></map>'
-};
-
-
-    var options = {
-        container:'jsmind_container',
-        editable:true,
-        theme:'orange'
-    };
-    var jm = new jsMind(options);
-    // show it
-    jm.show(mind);
-</script>
-  </body>
+            $('#jstree').jstree({
+                'core': {
+                    'data': jsonData
+                }
+            });
+        });
+    </script>
+</body>
 </html>
