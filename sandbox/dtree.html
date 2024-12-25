@@ -4,13 +4,43 @@
 <head>
   <meta charset="UTF-8">
   <title>Tree/Diag</title>
+  <link id="stylesheet" rel="stylesheet" href="./style_tree.css">
 <!-- про дерево https://iamkate.com/code/tree-views/
 !! выбирай один из стилей, чтобы отобразить как дерево или диаграмму. В истории есть еще как занести данные, чтобы не было смещения в горизонтальной линии
 пока сделал так, чтоб работало и дерево и диаграмма-->
-<!--  <link rel="stylesheet" href="./style_diagram.css">-->
-  <link rel="stylesheet" href="./style_tree.css">
 </head>
 <body>
+<script>
+<!--  function switchStyle(stylesheet) {-->
+<!--    document.getElementById('stylesheet').setAttribute('href', stylesheet);-->
+<!--}-->
+  function toggleStyle() {
+    const stylesheetLink = document.getElementById('stylesheet');
+    const toggleButton = document.getElementById('toggleButton');
+    const currentStylesheet = stylesheetLink.getAttribute('href');
+
+    if (currentStylesheet === './style_diagram.css') {
+        stylesheetLink.setAttribute('href', './style_tree.css');
+        toggleButton.textContent = 'Показать диаграмму';
+    } else {
+        stylesheetLink.setAttribute('href', './style_diagram.css');
+        toggleButton.textContent = 'Показать дерево';
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    fetch('1.html')
+        .then(response => response.text())
+        .then(data => {
+            const placeholders = document.querySelectorAll('.contentPlaceholder');
+            placeholders.forEach(placeholder => {
+                placeholder.innerHTML = data;
+            });
+        })
+        .catch(error => console.error('Error loading the content:', error));
+});
+</script>
+<button id="toggleButton" onclick="toggleStyle()">Показать диаграмму</button>
 
 <ul class="tree">
   <li>
@@ -25,30 +55,16 @@
                 <ul>
                   <li>
                       <code>
-                        <table border="1">
-                          <tr>
-                            <td>Android</td>
-                            <td>xxx</td>
-                          </tr>
-                          <tr>
-                            <td>Windows</td>
-                            <td>yyy</td>
-                          </tr>
-                      </table>
+                          <div class="contentPlaceholder">
+        <!-- Content will be inserted here -->
+    </div>
                       </code>
                   </li>
                   <li>
                       <code>
-                        <table border="1">
-                          <tr>
-                            <td>Android</td>
-                            <td>xxx</td>
-                          </tr>
-                          <tr>
-                            <td>Windows</td>
-                            <td>yyy</td>
-                          </tr>
-                      </table>
+                          <div class="contentPlaceholder">
+        <!-- Content will be inserted here -->
+    </div>
                       </code>
                   </li>
                 </ul>
