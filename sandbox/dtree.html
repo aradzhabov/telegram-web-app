@@ -11,9 +11,6 @@
 </head>
 <body>
 <script>
-<!--  function switchStyle(stylesheet) {-->
-<!--    document.getElementById('stylesheet').setAttribute('href', stylesheet);-->
-<!--}-->
   function toggleStyle() {
     const stylesheetLink = document.getElementById('stylesheet');
     const toggleButton = document.getElementById('toggleButton');
@@ -56,15 +53,15 @@ document.addEventListener('DOMContentLoaded', function() {
                   <li>
                       <code>
                           <div class="contentPlaceholder">
-        <!-- Content will be inserted here -->
-    </div>
+                                <!-- Content will be inserted here -->
+                         </div>
                       </code>
                   </li>
                   <li>
                       <code>
                           <div class="contentPlaceholder">
-        <!-- Content will be inserted here -->
-    </div>
+                                <!-- Content will be inserted here -->
+                            </div>
                       </code>
                   </li>
                 </ul>
@@ -84,6 +81,67 @@ document.addEventListener('DOMContentLoaded', function() {
       </ul>
     </details>
   </li>
+</ul>
+
+
+<ul class="tree">
+    <li>
+        <details><summary><code>root</code></summary>
+            <li>
+                <details>
+                    <summary><code>2</code></summary>
+                        <ul>
+                            <li><code>4</code></li>
+                        </ul>
+                </details>
+            </li>
+            <li>
+                <details><summary><code>3</code></summary>
+                    <ul>
+                        <li><code>4</code></li>
+                    </ul>
+                </details>
+            </li>
+        </details>
+    </li>
+</ul>
+
+
+
+<ul class="tree">
+<li>
+<details><summary><code>root</code></summary>
+<ul>
+<li>
+<details><summary><code>2</code></summary>
+<ul>
+<li>
+<code>4</code>
+</li>
+<li>
+<details><summary><code>5</code></summary>
+<ul>
+<li>
+<code>6</code>
+</li>
+</ul>
+</details>
+</li>
+</ul>
+</details>
+</li>
+<li>
+<details><summary><code>3</code></summary>
+<ul>
+<li>
+<code>4</code>
+</li>
+</ul>
+</details>
+</li>
+</ul>
+</details>
+</li>
 </ul>
 
 </body>
