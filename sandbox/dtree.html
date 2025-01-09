@@ -39,79 +39,76 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 <button id="toggleButton" onclick="toggleStyle()">Показать диаграмму</button>
 
-<ul class="tree">
-  <li>
-    <details open><summary><code>я хочу</code></summary>
-      <ul>
-        <li>
-          <details><summary><code>управлять курсором</code></summary>
-            <ul>
-              <li><code>могу использовать только голову и могу ее двигать вверх вниз вправо влево</code></li>
-              <li><code>не могу полноценно использовать руки и ноги, но могу нажать на одну кнопку</code></li>
-              <li><details><summary><code>полностью неподвижен, но могу смотреть в разные стороны</code></summary>
-                <ul>
-                  <li>
-                      <code>
-                          <div class="contentPlaceholder">
-                                <!-- Content will be inserted here -->
-                         </div>
-                      </code>
-                  </li>
-                  <li>
-                      <code>
-                          <div class="contentPlaceholder">
-                                <!-- Content will be inserted here -->
-                            </div>
-                      </code>
-                  </li>
-                </ul>
-                </details>
-              </li>
-            </ul>
-          </details>
-        </li>
-        <li>
-          <details><summary><code>услышать, что мне говорят</code></summary>
-            <ul>
-              <li><code>1.2.1</code></li>
-              <li><code>1.2.2</code></li>
-            </ul>
-          </details>
-        </li>
-      </ul>
-    </details>
-  </li>
-</ul>
-
-
-<ul class="tree">
-    <li>
-        <details><summary><code>root</code></summary>
-            <li>
-                <details>
-                    <summary><code>2</code></summary>
-                        <ul>
-                            <li><code>4</code></li>
-                        </ul>
-                </details>
-            </li>
-            <li>
-                <details><summary><code>3</code></summary>
-                    <ul>
-                        <li><code>4</code></li>
-                    </ul>
-                </details>
-            </li>
-        </details>
-    </li>
-</ul>
-
-
 
 <ul class="tree">
 <li>
-<details><summary><code>root</code></summary>
+<details><summary><code>Демонстрация идеи</code></summary>
 <ul>
+    <li>
+<details><summary><code>Данные</code></summary>
+<ul>
+<li>
+<code>
+    <table border="1">
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>child_id</th>
+            <th>title</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>2, 3, 8</td>
+            <td>Демонстрация идеи</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>4, 5, 3, 2</td>
+            <td>2</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>4, 3</td>
+            <td>3</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td></td>
+            <td>4</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>6, 7</td>
+            <td>5</td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td></td>
+            <td>6</td>
+        </tr>
+        <tr>
+            <td>7</td>
+            <td></td>
+            <td>7</td>
+        </tr>
+        <tr>
+            <td>8</td>
+            <td>9</td>
+            <td>Данные</td>
+        </tr>
+        <tr>
+            <td>9</td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+</code>
+</li>
+</ul>
+</details>
 <li>
 <details><summary><code>2</code></summary>
 <ul>
@@ -125,10 +122,11 @@ document.addEventListener('DOMContentLoaded', function() {
 <code>6</code>
 </li>
 <li>
-<code>7</code>
-</li>
-</ul>
-</details>
+<code>7<br>
+                          <div class="contentPlaceholder">
+                                <!-- Content will be inserted here -->
+                            </div>
+                      </code>
 </li>
 </ul>
 </details>
@@ -139,8 +137,25 @@ document.addEventListener('DOMContentLoaded', function() {
 <li>
 <code>4</code>
 </li>
+<li><code>3[Cycle Detected]</code></li>
 </ul>
 </details>
+</li>
+<li><code>2[Cycle Detected]</code></li>
+</ul>
+</details>
+</li>
+<li>
+<details><summary><code>3</code></summary>
+<ul>
+<li>
+<code>4</code>
+</li>
+<li><code>3[Cycle Detected]</code></li>
+</ul>
+</details>
+</li>
+
 </li>
 </ul>
 </details>
