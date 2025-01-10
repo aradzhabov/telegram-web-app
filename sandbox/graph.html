@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Graph</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #cy {
+            width: 800px;
+            height: 600px;
+            display: block;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Data Graph</h2>
+<div id="cy"></div>
+<button id="download">Download as PNG</button>
+
+<script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
+<script>
+    // Data from the table
+    const data = [
+        { id: 1, child_id: [2, 3, 8], title: 'Демонстрация идеи' },
+        { id: 2, child_id: [4, 5, 3, 2], title: '' },
+        { id: 3, child_id: [4, 3], title: '' },
+        { id: 4, child_id: [], title: '' },
+        { id: 5, child_id: [6, 7], title: '' },
+        { id: 6, child_id: [], title: '' },
+        { id: 7, child_id: [], title: '' },
+        { id: 8, child_id: [9], title: 'Данные' },
+        { id: 9, child_id: [], title: '' }
+    ];
+
+    // Prepare the data for Cytoscape.js
+    const elements = [];
+    data.forEach(item => {
+        elements.push({ data: { id: item.id, label: item.title || item.id } });
+        item.child_id.forEach(childId => {
+            elements.push({ data: { source: item.id, target: childId } });
+        });
+    });
+
+    // Initialize Cytoscape.js
+    const cy = cytoscape({
+        container: document.getElementById('cy'),
+        elements: elements,
+        style: [
+            {
+                selector: 'node',
+                style: {
+                    'label': 'data(label)',
+                    'background-color': '#69b3a2',
+                    'text-valign': 'center',
+                    'color': '#000'
+                }
+            },
+            {
+                selector: 'edge',
+                style: {
+                    'width': 2,
+                    'line-color': '#999',
+                    'target-arrow-color': '#999',
+                    'target-arrow-shape': 'triangle'
+                }
+            }
+        ],
+        layout: {
+            name: 'cose',
+            padding: 10
+        }
+    });
+
+    // Function to download the graph as a PNG image
+    document.getElementById('download').addEventListener('click', function() {
+        const png64 = cy.png();
+        const link = document.createElement('a');
+        link.download = 'graph.png';
+        link.href = png64;
+        link.click();
+    });
+</script>
+
+</body>
+</html>
