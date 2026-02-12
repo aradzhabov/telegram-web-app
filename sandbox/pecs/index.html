@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Галерея стикеров</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: var(--tg-theme-bg-color, #f5f5f5);
+            color: var(--tg-theme-text-color, #222);
+            padding: 16px;
+            padding-bottom: 80px;
+        }
+
+        .header {
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--tg-theme-text-color, #222);
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: var(--tg-theme-hint-color, #777);
+            font-size: 14px;
+        }
+
+        .categories {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+        }
+
+        .categories::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .categories::-webkit-scrollbar-thumb {
+            background: var(--tg-theme-hint-color, #ccc);
+            border-radius: 4px;
+        }
+
+        .category-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            background: var(--tg-theme-secondary-bg-color, #e0e0e0);
+            color: var(--tg-theme-text-color, #222);
+            font-size: 15px;
+            font-weight: 500;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+        .category-btn.active {
+            background: var(--tg-theme-button-color, #40a7e3);
+            color: var(--tg-theme-button-text-color, white);
+        }
+
+        .stickers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 16px;
+        }
+
+        .sticker-card {
+            background: var(--tg-theme-secondary-bg-color, white);
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 2px solid transparent;
+        }
+
+        .sticker-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .sticker-card:active {
+            transform: scale(0.98);
+        }
+
+        .sticker-emoji {
+            font-size: 64px;
+            margin-bottom: 8px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .sticker-name {
+            font-size: 16px;
+            font-weight: 600;
+            text-align: center;
+            color: var(--tg-theme-text-color, #222);
+            margin-bottom: 4px;
+        }
+
+        .sticker-category {
+            font-size: 12px;
+            color: var(--tg-theme-hint-color, #777);
+            text-align: center;
+            background: var(--tg-theme-bg-color, #f5f5f5);
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-top: 4px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--tg-theme-hint-color, #777);
+            font-size: 16px;
+            grid-column: 1 / -1;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 16px;
+            background: var(--tg-theme-bg-color, white);
+            border-top: 1px solid var(--tg-theme-secondary-bg-color, #e0e0e0);
+            text-align: center;
+            font-size: 13px;
+            color: var(--tg-theme-hint-color, #777);
+            backdrop-filter: blur(10px);
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 12px 16px;
+            border: none;
+            border-radius: 24px;
+            background: var(--tg-theme-secondary-bg-color, #e0e0e0);
+            color: var(--tg-theme-text-color, #222);
+            font-size: 16px;
+            margin-bottom: 20px;
+            outline: none;
+        }
+
+        .search-box::placeholder {
+            color: var(--tg-theme-hint-color, #777);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: var(--tg-theme-bg-color, #1a1a1a);
+            }
+
+            .sticker-card {
+                background: var(--tg-theme-secondary-bg-color, #2a2a2a);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🎨 Галерея стикеров</h1>
+        <p class="subtitle">Выберите стикер для отправки в группу</p>
+    </div>
+
+    <!-- Поиск -->
+    <input type="text" class="search-box" id="searchInput" placeholder="🔍 Поиск стикеров..." onkeyup="filterStickers()">
+
+    <!-- Категории -->
+    <div class="categories" id="categories"></div>
+
+    <!-- Сетка стикеров -->
+    <div id="stickers-container" class="stickers-grid"></div>
+
+    <div class="footer">
+        👆 Нажмите на стикер, чтобы отправить в группу
+    </div>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+
+        // Инициализация WebApp
+        tg.expand();
+        tg.ready();
+        tg.enableClosingConfirmation();
+
+        // ============ БАЗА ДАННЫХ СТИКЕРОВ ============
+        // Здесь вы можете добавлять свои стикеры
+        // Вместо emoji можно использовать ссылки на изображения или file_id
+
+        const STICKERS_DATABASE = {
+            "actions": {
+                "name": "🏃 Действия",
+                "icon": "🏃",
+                "stickers": [
+                    { "id": "sticker_drink_1", "name": "Пить", "emoji": "🥤", "file_id": "CAACAgIAAxkBAAEM5gZm6NpAqVtWqVtWqVtWqQ" },
+                    { "id": "sticker_eat_1", "name": "Есть", "emoji": "🍽️", "file_id": "CAACAgIAAxkBAAEM5gZm6NpAqVtWqVtWqVtWqQ" },
+                    { "id": "sticker_run_1", "name": "Бежать", "emoji": "🏃", "file_id": "CAACAgIAAxkBAAEM5gZm6NpAqVtWqVtWqVtWqQ" },
+                    { "id": "sticker_sleep_1", "name": "Спать", "emoji": "😴", "file_id": "CAACAgIAAxkBAAEM5gZm6NpAqVtWqVtWqVtWqQ" },
+                    { "id": "sticker_work_1", "name": "Работать", "emoji": "💼", "file_id": "CAACAgIAAxkBAAEM5gZm6NpAqVtWqVtWqVtWqQ" },
+                    { "id": "sticker_think_1", "name": "Думать", "emoji": "🤔", "file_id": "CAACAgIAAxkBAAEM5gZm6NpAqVtWqVtWqVtWqQ" },
+                    { "id": "sticker_read_1", "name": "Читать", "emoji": "📚", "file_id": "CAACAgIAAxkBAAEM5gZm6NpAqVtWqVtWqVtWqQ" }
+                ]
+            },
+            "food": {
+                "name": "🍔 Еда",
+                "icon": "🍔",
+                "stickers": [
+                    { "id": "sticker_pizza_1", "name": "Пицца", "emoji": "🍕", "file_id": "CAACAgIAAxkBAAEM5gZm6NpAqVtWqVtWqVtWqQ" },
+                    { "id": "sticker_burger_1", "name": "Бургер", "emoji": "🍔", "file_id": "CAACAgIAAxkBAAEM5gZm6NpAqVtWqVtWqVtWqQ" },
+                    { "id": "sticker_sushi_1", "name": "Суши", "emoji": "🍣", "file_id": "CAACAgIAAxkBAAEM5gZm6NpAqVtWqVtWqVtWqQ" },
+                    { "id": "sticker_fruit_1", "name": "Фрукты", "emoji": "🍎", "file_id": "CAACAgIAAxkBAAEM5gZm6NpAqVtWqVtWqVtWqQ" },
+                    { "id": "sticker_icecream_1", "name": "Мороженое", "emoji": "🍦", "file_id": "CAACAgIAAxkBAAEM5gZm6NpAqVtWqVtWqVtWqQ" },
+                    { "id": "sticker_coffee_1", "name": "Кофе", "emoji": "☕", "file_id": "CAACAgIAAxkBAAEM5gZm6NpAqVtWqVtWqVtWqQ" },
+                    { "id": "sticker_cake_1", "name": "Торт", "emoji": "🎂", "file_id": "CAACAgIAAxkBAAEM5gZm6NpAqVtWqVtWqVtWqQ" }
+                ]
+            },
+            "emotions": {
+                "name": "😊 Эмоции",
+                "icon": "😊",
+                "stickers": [
+                    { "id": "sticker_happy_1", "name": "Счастье", "emoji": "😊", "file_id": "CAACAgIAAxkBAAEM5gZm6NpAqVtWqVtWqVtWqQ" },
+                    { "id": "sticker_sad_1", "name": "Грусть", "emoji": "😢", "file_id": "CAACAgIAAxkBAAEM5gZm6NpAqVtWqVtWqVtWqQ" },
+                    { "id": "sticker_surprised_1", "name": "Удивление", "emoji": "😮", "file_id": "CAACAgIAAxkBAAEM5gZm6NpAqVtWqVtWqVtWqQ" },
+                    { "id": "sticker_angry_1", "name": "Злость", "emoji": "😠", "file_id": "CAACAgIAAxkBAAEM5gZm6NpAqVtWqVtWqVtWqQ" },
+                    { "id": "sticker_love_1", "name": "Любовь", "emoji": "❤️", "file_id": "CAACAgIAAxkBAAEM5gZm6NpAqVtWqVtWqVtWqQ" },
+                    { "id": "sticker_laugh_1", "name": "Смех", "emoji": "😂", "file_id": "CAACAgIAAxkBAAEM5gZm6NpAqVtWqVtWqVtWqQ" }
+                ]
+            },
+            "animals": {
+                "name": "🐻 Животные",
+                "icon": "🐻",
+                "stickers": [
+                    { "id": "sticker_cat_1", "name": "Кот", "emoji": "🐱", "file_id": "CAACAgIAAxkBAAEM5gZm6NpAqVtWqVtWqVtWqQ" },
+                    { "id": "sticker_dog_1", "name": "Собака", "emoji": "🐶", "file_id": "CAACAgIAAxkBAAEM5gZm6NpAqVtWqVtWqVtWqQ" },
+                    { "id": "sticker_panda_1", "name": "Панда", "emoji": "🐼", "file_id": "CAACAgIAAxkBAAEM5gZm6NpAqVtWqVtWqVtWqQ" },
+                    { "id": "sticker_fox_1", "name": "Лиса", "emoji": "🦊", "file_id": "CAACAgIAAxkBAAEM5gZm6NpAqVtWqVtWqVtWqQ" },
+                    { "id": "sticker_penguin_1", "name": "Пингвин", "emoji": "🐧", "file_id": "CAACAgIAAxkBAAEM5gZm6NpAqVtWqVtWqVtWqQ" }
+                ]
+            },
+            "sports": {
+                "name": "⚽ Спорт",
+                "icon": "⚽",
+                "stickers": [
+                    { "id": "sticker_football_1", "name": "Футбол", "emoji": "⚽", "file_id": "CAACAgIAAxkBAAEM5gZm6NpAqVtWqVtWqVtWqQ" },
+                    { "id": "sticker_basketball_1", "name": "Баскетбол", "emoji": "🏀", "file_id": "CAACAgIAAxkBAAEM5gZm6NpAqVtWqVtWqVtWqQ" },
+                    { "id": "sticker_tennis_1", "name": "Теннис", "emoji": "🎾", "file_id": "CAACAgIAAxkBAAEM5gZm6NpAqVtWqVtWqVtWqQ" },
+                    { "id": "sticker_swim_1", "name": "Плавание", "emoji": "🏊", "file_id": "CAACAgIAAxkBAAEM5gZm6NpAqVtWqVtWqVtWqQ" }
+                ]
+            },
+            "travel": {
+                "name": "✈️ Путешествия",
+                "icon": "✈️",
+                "stickers": [
+                    { "id": "sticker_plane_1", "name": "Самолет", "emoji": "✈️", "file_id": "CAACAgIAAxkBAAEM5gZm6NpAqVtWqVtWqVtWqQ" },
+                    { "id": "sticker_train_1", "name": "Поезд", "emoji": "🚂", "file_id": "CAACAgIAAxkBAAEM5gZm6NpAqVtWqVtWqVtWqQ" },
+                    { "id": "sticker_car_1", "name": "Машина", "emoji": "🚗", "file_id": "CAACAgIAAxkBAAEM5gZm6NpAqVtWqVtWqVtWqQ" },
+                    { "id": "sticker_beach_1", "name": "Пляж", "emoji": "🏖️", "file_id": "CAACAgIAAxkBAAEM5gZm6NpAqVtWqVtWqVtWqQ" }
+                ]
+            }
+        };
+
+        // Состояние приложения
+        let currentCategory = 'all';
+        let searchQuery = '';
+
+        // Инициализация
+        function init() {
+            renderCategories();
+            renderStickers();
+
+            // Настраиваем тему
+            tg.setHeaderColor('bg_color');
+            tg.setBackgroundColor('bg_color');
+        }
+
+        // Отображение категорий
+        function renderCategories() {
+            const categoriesContainer = document.getElementById('categories');
+
+            let html = `<button class="category-btn ${currentCategory === 'all' ? 'active' : ''}"
+                               onclick="selectCategory('all')">
+                            🏠 Все (${getTotalStickersCount()})
+                        </button>`;
+
+            for (const [key, category] of Object.entries(STICKERS_DATABASE)) {
+                const count = category.stickers.length;
+                html += `<button class="category-btn ${currentCategory === key ? 'active' : ''}"
+                                 onclick="selectCategory('${key}')">
+                            ${category.icon || '📁'} ${category.name} (${count})
+                        </button>`;
+            }
+
+            categoriesContainer.innerHTML = html;
+        }
+
+        // Получить общее количество стикеров
+        function getTotalStickersCount() {
+            let total = 0;
+            for (const category of Object.values(STICKERS_DATABASE)) {
+                total += category.stickers.length;
+            }
+            return total;
+        }
+
+        // Выбор категории
+        function selectCategory(category) {
+            currentCategory = category;
+            searchQuery = ''; // Сбрасываем поиск
+            document.getElementById('searchInput').value = '';
+            renderCategories();
+            renderStickers();
+        }
+
+        // Фильтрация стикеров по поиску
+        function filterStickers() {
+            searchQuery = document.getElementById('searchInput').value.toLowerCase();
+            renderStickers();
+        }
+
+        // Отображение стикеров
+        function renderStickers() {
+            const container = document.getElementById('stickers-container');
+
+            let stickers = [];
+
+            if (currentCategory === 'all') {
+                // Собираем все стикеры из всех категорий
+                for (const [catKey, category] of Object.entries(STICKERS_DATABASE)) {
+                    stickers = stickers.concat(category.stickers.map(s => ({
+                        ...s,
+                        category: category.name,
+                        categoryKey: catKey
+                    })));
+                }
+            } else {
+                // Берем стикеры только выбранной категории
+                const category = STICKERS_DATABASE[currentCategory];
+                if (category) {
+                    stickers = category.stickers.map(s => ({
+                        ...s,
+                        category: category.name,
+                        categoryKey: currentCategory
+                    }));
+                }
+            }
+
+            // Фильтрация по поиску
+            if (searchQuery) {
+                stickers = stickers.filter(s =>
+                    s.name.toLowerCase().includes(searchQuery) ||
+                    s.category.toLowerCase().includes(searchQuery)
+                );
+            }
+
+            if (stickers.length === 0) {
+                container.innerHTML = '<div class="empty-state">😕 Стикеры не найдены</div>';
+                return;
+            }
+
+            let html = '';
+            stickers.forEach(sticker => {
+                html += `
+                    <div class="sticker-card" onclick="selectSticker('${sticker.file_id || sticker.id}', '${sticker.name}', '${sticker.category}')">
+                        <div class="sticker-emoji">${sticker.emoji || '🖼️'}</div>
+                        <div class="sticker-name">${sticker.name}</div>
+                        <div class="sticker-category">${sticker.category}</div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        // Выбор стикера
+        function selectSticker(fileId, stickerName, category) {
+            // Отправляем данные обратно в бота
+            tg.sendData(JSON.stringify({
+                sticker_id: fileId,
+                name: stickerName,
+                category: category
+            }));
+
+            // Показываем уведомление
+            tg.showAlert(`✅ Стикер "${stickerName}" отправляется в группу!`);
+
+            // Закрываем WebApp через небольшую задержку
+            setTimeout(() => {
+                tg.close();
+            }, 800);
+        }
+
+        // Показ ошибки
+        function showError(message) {
+            const container = document.getElementById('stickers-container');
+            container.innerHTML = `<div class="empty-state">❌ ${message}</div>`;
+        }
+
+        // Запускаем приложение
+        init();
+    </script>
+</body>
+</html>
