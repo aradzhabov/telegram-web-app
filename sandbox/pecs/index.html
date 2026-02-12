@@ -211,7 +211,7 @@
                 "name": "🏃 Действия",
                 "icon": "🏃",
                 "stickers": [
-                    { "id": "sticker_drink_1", "name": "Пить", "emoji": "🥤", "file_id": "CAACAgIAAxkBAAEM5gZm6NpAqVtWqVtWqVtWqQ" },
+                    { "id": "sticker_drink_1", "name": "Пить", "emoji": "🥤", "file_id": "CAACAgIAAxkBAAIBLWInOxgZdxMeEVRi9iiWqL33fG7_AAJEAAP3k8gnUo6yH-Z9zA8kBA" },
                     { "id": "sticker_eat_1", "name": "Есть", "emoji": "🍽️", "file_id": "CAACAgIAAxkBAAEM5gZm6NpAqVtWqVtWqVtWqQ" },
                     { "id": "sticker_run_1", "name": "Бежать", "emoji": "🏃", "file_id": "CAACAgIAAxkBAAEM5gZm6NpAqVtWqVtWqVtWqQ" },
                     { "id": "sticker_sleep_1", "name": "Спать", "emoji": "😴", "file_id": "CAACAgIAAxkBAAEM5gZm6NpAqVtWqVtWqVtWqQ" },
@@ -281,6 +281,19 @@
         // Состояние приложения
         let currentCategory = 'all';
         let searchQuery = '';
+
+        // Функция, которая вызывается при клике на стикер
+        function selectSticker(stickerId) {
+            // Формируем данные для отправки (лучше в формате JSON)
+            const data = JSON.stringify({
+                action: 'send_sticker',
+                sticker_id: stickerId
+            });
+
+            // ОТПРАВКА ДАННЫХ В БОТ
+            tg.sendData(data);
+        }
+
 
         // Инициализация
         function init() {
