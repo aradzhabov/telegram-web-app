@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Галерея карточек</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: var(--tg-theme-bg-color, #f5f5f5);
+            color: var(--tg-theme-text-color, #222);
+            padding: 16px;
+            padding-bottom: 80px;
+        }
+
+        .header {
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--tg-theme-text-color, #222);
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: var(--tg-theme-hint-color, #777);
+            font-size: 14px;
+        }
+
+        .categories {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+        }
+
+        .categories::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .categories::-webkit-scrollbar-thumb {
+            background: var(--tg-theme-hint-color, #ccc);
+            border-radius: 4px;
+        }
+
+        .category-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            background: var(--tg-theme-secondary-bg-color, #e0e0e0);
+            color: var(--tg-theme-text-color, #222);
+            font-size: 15px;
+            font-weight: 500;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.2s;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .category-btn.active {
+            background: var(--tg-theme-button-color, #40a7e3);
+            color: var(--tg-theme-button-text-color, white);
+        }
+
+        .category-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 12px;
+            object-fit: cover;
+        }
+
+        .stickers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 16px;
+        }
+
+        .sticker-card {
+            background: var(--tg-theme-secondary-bg-color, white);
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 2px solid transparent;
+        }
+
+        .sticker-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .sticker-card:active {
+            transform: scale(0.98);
+        }
+
+        .sticker-image {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 12px;
+            border-radius: 16px;
+            object-fit: contain;
+            background: var(--tg-theme-bg-color, #f5f5f5);
+            padding: 8px;
+        }
+
+        .sticker-name {
+            font-size: 16px;
+            font-weight: 600;
+            text-align: center;
+            color: var(--tg-theme-text-color, #222);
+            margin-bottom: 4px;
+        }
+
+        .sticker-category {
+            font-size: 12px;
+            color: var(--tg-theme-hint-color, #777);
+            text-align: center;
+            background: var(--tg-theme-bg-color, #f5f5f5);
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-top: 4px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--tg-theme-hint-color, #777);
+            font-size: 16px;
+            grid-column: 1 / -1;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 16px;
+            background: var(--tg-theme-bg-color, white);
+            border-top: 1px solid var(--tg-theme-secondary-bg-color, #e0e0e0);
+            text-align: center;
+            font-size: 13px;
+            color: var(--tg-theme-hint-color, #777);
+            backdrop-filter: blur(10px);
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 12px 16px;
+            border: none;
+            border-radius: 24px;
+            background: var(--tg-theme-secondary-bg-color, #e0e0e0);
+            color: var(--tg-theme-text-color, #222);
+            font-size: 16px;
+            margin-bottom: 20px;
+            outline: none;
+        }
+
+        .search-box::placeholder {
+            color: var(--tg-theme-hint-color, #777);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--tg-theme-hint-color, #777);
+            font-size: 16px;
+            grid-column: 1 / -1;
+        }
+
+        .error {
+            text-align: center;
+            padding: 60px 20px;
+            color: #ff6b6b;
+            font-size: 16px;
+            grid-column: 1 / -1;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: var(--tg-theme-bg-color, #1a1a1a);
+            }
+
+            .sticker-card {
+                background: var(--tg-theme-secondary-bg-color, #2a2a2a);
+            }
+
+            .sticker-image {
+                background: var(--tg-theme-secondary-bg-color, #3a3a3a);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🎨 Галерея карточек</h1>
+        <p class="subtitle" id="subtitle">Выберите карточку для отправки</p>
+    </div>
+
+    <!-- Поиск -->
+    <input type="text" class="search-box" id="searchInput" placeholder="🔍 Поиск карточек..." onkeyup="filterStickers()">
+
+    <!-- Категории -->
+    <div class="categories" id="categories"></div>
+
+    <!-- Сетка карточек -->
+    <div id="stickers-container" class="stickers-grid">
+        <div class="loading">⏳ Загрузка карточек...</div>
+    </div>
+
+    <div class="footer">
+        👆 Нажмите на карточку, чтобы отправить
+    </div>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+
+        // Инициализация WebApp
+        tg.expand();
+        tg.ready();
+        tg.enableClosingConfirmation();
+
+        // Состояние приложения
+        let currentCategory = 'all';
+        let searchQuery = '';
+        let stickersData = null;
+        let imagesBasePath = '';
+
+        // Загружаем конфигурацию из JSON файла
+        async function loadConfig() {
+            try {
+                // Пытаемся загрузить config.json из той же папки, где лежит HTML
+                const response = await fetch('config.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const config = await response.json();
+
+                // Сохраняем данные
+                stickersData = config.stickers;
+                imagesBasePath = config.imagesBasePath || 'images/';
+
+                // Обновляем заголовок если есть
+                if (config.title) {
+                    document.querySelector('h1').textContent = config.title;
+                }
+                if (config.subtitle) {
+                    document.getElementById('subtitle').textContent = config.subtitle;
+                }
+
+                // Инициализируем интерфейс
+                init();
+
+            } catch (error) {
+                console.error('Ошибка загрузки config.json:', error);
+                showError('Не удалось загрузить конфигурацию. Проверьте наличие файла config.json');
+
+                // Для тестирования загружаем демо-данные
+                loadDemoData();
+            }
+        }
+
+        // Демо-данные для тестирования (если нет config.json)
+        function loadDemoData() {
+            stickersData = {
+                "actions": {
+                    "name": "Действия",
+                    "icon": "actions.png",
+                    "stickers": [
+                        { "id": "drink", "name": "Пить", "image": "drink.png" },
+                        { "id": "eat", "name": "Есть", "image": "eat.png" },
+                        { "id": "sleep", "name": "Спать", "image": "sleep.png" }
+                    ]
+                },
+                "food": {
+                    "name": "Еда",
+                    "icon": "food.png",
+                    "stickers": [
+                        { "id": "icecream", "name": "Мороженое", "image": "icecream.png" },
+                        { "id": "pizza", "name": "Пицца", "image": "pizza.png" },
+                        { "id": "cake", "name": "Торт", "image": "cake.png" }
+                    ]
+                }
+            };
+            imagesBasePath = 'images/';
+            init();
+        }
+
+        // Инициализация после загрузки данных
+        function init() {
+            renderCategories();
+            renderStickers();
+
+            // Настраиваем тему
+            tg.setHeaderColor('bg_color');
+            tg.setBackgroundColor('bg_color');
+        }
+
+        // Показать ошибку
+        function showError(message) {
+            const container = document.getElementById('stickers-container');
+            container.innerHTML = `<div class="error">❌ ${message}</div>`;
+        }
+
+        // Отображение категорий
+        function renderCategories() {
+            if (!stickersData) return;
+
+            const categoriesContainer = document.getElementById('categories');
+
+            let html = `<button class="category-btn ${currentCategory === 'all' ? 'active' : ''}"
+                               onclick="selectCategory('all')">
+                            🏠 Все (${getTotalStickersCount()})
+                        </button>`;
+
+            for (const [key, category] of Object.entries(stickersData)) {
+                const count = category.stickers.length;
+                const iconPath = category.icon ? `${imagesBasePath}${category.icon}` : null;
+
+                html += `<button class="category-btn ${currentCategory === key ? 'active' : ''}"
+                                 onclick="selectCategory('${key}')">`;
+
+                if (iconPath) {
+                    html += `<img class="category-icon" src="${iconPath}" alt="${category.name}" onerror="this.style.display='none'">`;
+                }
+
+                html += ` ${category.name} (${count})</button>`;
+            }
+
+            categoriesContainer.innerHTML = html;
+        }
+
+        // Получить общее количество карточек
+        function getTotalStickersCount() {
+            if (!stickersData) return 0;
+
+            let total = 0;
+            for (const category of Object.values(stickersData)) {
+                total += category.stickers.length;
+            }
+            return total;
+        }
+
+        // Выбор категории
+        function selectCategory(category) {
+            currentCategory = category;
+            searchQuery = '';
+            document.getElementById('searchInput').value = '';
+            renderCategories();
+            renderStickers();
+        }
+
+        // Фильтрация карточек по поиску
+        function filterStickers() {
+            searchQuery = document.getElementById('searchInput').value.toLowerCase();
+            renderStickers();
+        }
+
+        // Отображение карточек
+        function renderStickers() {
+            if (!stickersData) return;
+
+            const container = document.getElementById('stickers-container');
+
+            let stickers = [];
+
+            if (currentCategory === 'all') {
+                // Собираем все карточки из всех категорий
+                for (const [catKey, category] of Object.entries(stickersData)) {
+                    stickers = stickers.concat(category.stickers.map(s => ({
+                        ...s,
+                        category: category.name,
+                        categoryKey: catKey
+                    })));
+                }
+            } else {
+                // Берем карточки только выбранной категории
+                const category = stickersData[currentCategory];
+                if (category) {
+                    stickers = category.stickers.map(s => ({
+                        ...s,
+                        category: category.name,
+                        categoryKey: currentCategory
+                    }));
+                }
+            }
+
+            // Фильтрация по поиску
+            if (searchQuery) {
+                stickers = stickers.filter(s =>
+                    s.name.toLowerCase().includes(searchQuery) ||
+                    s.category.toLowerCase().includes(searchQuery)
+                );
+            }
+
+            if (stickers.length === 0) {
+                container.innerHTML = '<div class="empty-state">😕 Карточки не найдены</div>';
+                return;
+            }
+
+            let html = '';
+            stickers.forEach(sticker => {
+                const imagePath = sticker.image ? `${imagesBasePath}${sticker.image}` : null;
+
+                html += `
+                    <div class="sticker-card" onclick="selectSticker('${sticker.id}', '${sticker.name}', '${sticker.category}')">`;
+
+                if (imagePath) {
+                    html += `<img class="sticker-image" src="${imagePath}" alt="${sticker.name}"
+                                 onerror="this.src='${imagesBasePath}placeholder.png'; this.onerror=null">`;
+                } else {
+                    html += `<div class="sticker-image" style="background: var(--tg-theme-secondary-bg-color); display: flex; align-items: center; justify-content: center; font-size: 32px;">🖼️</div>`;
+                }
+
+                html += `
+                        <div class="sticker-name">${sticker.name}</div>
+                        <div class="sticker-category">${sticker.category}</div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        // Выбор карточки
+        function selectSticker(stickerId, stickerName, category) {
+            // Отправляем данные обратно в бота
+            tg.sendData(JSON.stringify({
+                sticker_id: stickerId,
+                name: stickerName,
+                category: category
+            }));
+
+            // Закрываем WebApp через небольшую задержку
+            setTimeout(() => {
+                tg.close();
+            }, 500);
+        }
+
+        // Запускаем загрузку конфигурации
+        loadConfig();
+    </script>
+</body>
+</html>

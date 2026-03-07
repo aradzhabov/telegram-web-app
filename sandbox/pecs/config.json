@@ -1,0 +1,39 @@
+{
+  "title": "🎴 Карточки желаний",
+  "subtitle": "Выберите, что хотите",
+  "imagesBasePath": "images/",
+  "stickers": {
+    "actions": {
+      "name": "Действия",
+      "icon": "category_actions.png",
+      "stickers": [
+        { "id": "drink", "name": "Пить", "image": "about.png" },
+        { "id": "eat", "name": "Есть", "image": "action_eat.png" },
+        { "id": "sleep", "name": "Спать", "image": "action_sleep.png" },
+        { "id": "walk", "name": "Гулять", "image": "action_walk.png" },
+        { "id": "play", "name": "Играть", "image": "action_play.png" }
+      ]
+    },
+    "food": {
+      "name": "Еда",
+      "icon": "category_food.png",
+      "stickers": [
+        { "id": "icecream", "name": "Мороженое", "image": "food_icecream.png" },
+        { "id": "pizza", "name": "Пицца", "image": "food_pizza.png" },
+        { "id": "cake", "name": "Торт", "image": "food_cake.png" },
+        { "id": "apple", "name": "Яблоко", "image": "food_apple.png" },
+        { "id": "chocolate", "name": "Шоколад", "image": "food_chocolate.png" }
+      ]
+    },
+    "emotions": {
+      "name": "Эмоции",
+      "icon": "category_emotions.png",
+      "stickers": [
+        { "id": "happy", "name": "Счастье", "image": "emotion_happy.png" },
+        { "id": "sad", "name": "Грусть", "image": "emotion_sad.png" },
+        { "id": "angry", "name": "Злость", "image": "emotion_angry.png" },
+        { "id": "love", "name": "Любовь", "image": "emotion_love.png" }
+      ]
+    }
+  }
+}
