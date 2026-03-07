@@ -243,10 +243,21 @@
         let searchQuery = '';
         let stickersData = null;
         let imagesBasePath = '';
+        let baseUrl = ''; // Базовый URL для формирования полных ссылок
+
+        // Получаем базовый URL текущей страницы
+        function getBaseUrl() {
+            const url = window.location.origin + window.location.pathname;
+            // Убираем имя файла из пути
+            return url.substring(0, url.lastIndexOf('/') + 1);
+        }
 
         // Загружаем конфигурацию из JSON файла
         async function loadConfig() {
             try {
+                baseUrl = getBaseUrl();
+                console.log('Базовый URL:', baseUrl);
+
                 // Пытаемся загрузить config.json из той же папки, где лежит HTML
                 const response = await fetch('config.json');
                 if (!response.ok) {
@@ -301,6 +312,7 @@
                 }
             };
             imagesBasePath = 'images/';
+            baseUrl = getBaseUrl();
             init();
         }
 
@@ -333,7 +345,7 @@
 
             for (const [key, category] of Object.entries(stickersData)) {
                 const count = category.stickers.length;
-                const iconPath = category.icon ? `${imagesBasePath}${category.icon}` : null;
+                const iconPath = category.icon ? `${baseUrl}${imagesBasePath}${category.icon}` : null;
 
                 html += `<button class="category-btn ${currentCategory === key ? 'active' : ''}"
                                  onclick="selectCategory('${key}')">`;
@@ -372,6 +384,19 @@
         function filterStickers() {
             searchQuery = document.getElementById('searchInput').value.toLowerCase();
             renderStickers();
+        }
+
+        // Формирование полной HTTP ссылки на картинку
+        function getFullImageUrl(imagePath) {
+            if (!imagePath) return null;
+
+            // Если это уже полная ссылка (начинается с http), возвращаем как есть
+            if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) {
+                return imagePath;
+            }
+
+            // Иначе формируем полную ссылку относительно базового URL
+            return `${baseUrl}${imagesBasePath}${imagePath}`;
         }
 
         // Отображение карточек
@@ -419,13 +444,14 @@
             let html = '';
             stickers.forEach(sticker => {
                 const imagePath = sticker.image ? `${imagesBasePath}${sticker.image}` : null;
+                const fullImageUrl = getFullImageUrl(sticker.image);
 
                 html += `
-                    <div class="sticker-card" onclick="selectSticker('${sticker.id}', '${sticker.name}', '${sticker.category}')">`;
+                    <div class="sticker-card" onclick="selectSticker('${sticker.id}', '${sticker.name}', '${sticker.category}', '${fullImageUrl || ''}')">`;
 
-                if (imagePath) {
-                    html += `<img class="sticker-image" src="${imagePath}" alt="${sticker.name}"
-                                 onerror="this.src='${imagesBasePath}placeholder.png'; this.onerror=null">`;
+                if (fullImageUrl) {
+                    html += `<img class="sticker-image" src="${fullImageUrl}" alt="${sticker.name}"
+                                 onerror="this.src='${baseUrl}${imagesBasePath}placeholder.png'; this.onerror=null">`;
                 } else {
                     html += `<div class="sticker-image" style="background: var(--tg-theme-secondary-bg-color); display: flex; align-items: center; justify-content: center; font-size: 32px;">🖼️</div>`;
                 }
@@ -441,13 +467,20 @@
         }
 
         // Выбор карточки
-        function selectSticker(stickerId, stickerName, category) {
-            // Отправляем данные обратно в бота
-            tg.sendData(JSON.stringify({
-                sticker_id: stickerId,
+        function selectSticker(stickerId, stickerName, category, imageUrl) {
+            // Формируем данные для отправки
+            // В поле sticker_id отправляем полную HTTP ссылку на картинку
+            const data = {
+                sticker_id: imageUrl, // Теперь здесь полная HTTP ссылка
                 name: stickerName,
-                category: category
-            }));
+                category: category,
+                id: stickerId // Сохраняем оригинальный ID отдельно, если нужно
+            };
+
+            console.log('Отправка данных:', data);
+
+            // Отправляем данные обратно в бота
+            tg.sendData(JSON.stringify(data));
 
             // Закрываем WebApp через небольшую задержку
             setTimeout(() => {
